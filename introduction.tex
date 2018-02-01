@@ -3,7 +3,11 @@ Grasp planning is an active area of research. In this paper we show how to plan 
 The combination of constraints makes the problem particularly challenging, because it means that surface reconstruction will be partial, yet this cannot be compensated for by fitting a known object model. This incompleteness in object surface reconstruction, together with additional uncertainty about object mass, co-efficients of friction, etcetera, renders infeasible the use of grasp planners that employ classical mechanics to predict grasp quality. Instead, we must employ a learning approach.
 
 At the heart of reliable grasping there are two problems: generation and evaluation. Candidate grasps must be generated, and then each candidate must be evaluated, so as to produce one or more of a predicted grasp quality measure (e.g maximum resistable wrench), the probability of grasp success, the likely in-hand slip or rotation, etcetera. 
-
+\begin{figure}[t]
+  \includegraphics[width=\columnwidth]{images/contribution.pdf}
+  \caption{The trained generative-evaluative architecture when presented with a novel object.}
+\label{fig:systemArchitecture}
+\end{figure}
 Either or both a {\em generative} or {\em evaluative} model can be learned. If only a generative model is learned then evaluation must be carried out using mechanically informed reasoning, which cannot easily apply to our case of partial object reconstruction. If only an evaluative model is learned then grasp generation must proceed by search. This is feasible for pinch grippers, where the configuration space is of low dimension, but is more expensive for dexterous grasping, where the space can easily exceed 15 DoF. Thus, for dexterous grasping of novel objects from a single view it becomes appealing to learn both a generative and an evaluative model. This is the approach taken in this paper and it is, to the best of our knowledge, the first work to do so for dexterous grasping of novel objects from a single view.
 
 Recently, data intensive learning methods have been shown to learn good evaluative models. %Levine predicts the probability of success for a possible pinch grasp constrained to lie in $SE(3)$, given an input image. Other work here ... 

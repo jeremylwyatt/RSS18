@@ -16,7 +16,19 @@ where $\om$ is short for $\pdf^\om$, bandwidth $\sigma_{x} = (\sigma_{p}, \sigma
 \mathcal{K}(x | \mu, \sigma) = \mathcal{N}_3(p| \mu_p, \sigma_p) \Theta(q| \mu_q, \sigma_q) \mathcal{N}_2(r| \mu_r, \sigma_r)
 \end{equation}
 where $\mu$ is the kernel mean point, $\sigma$ is the kernel bandwidth, $\mathcal{N}_n$ is an $n$-variate isotropic Gaussian kernel, and ${\Theta}$ corresponds to a pair of antipodal von Mises-Fisher distributions.
-
+\begin{figure*}[t]
+\includegraphics[width=0.19\textwidth]{images/contact-viewall1}
+\includegraphics[width=0.19\textwidth]{images/contact-viewall2}
+\includegraphics[width=0.19\textwidth]{images/contact-viewall3}
+\includegraphics[width=0.19\textwidth]{images/contact-viewall4}
+\includegraphics[width=0.19\textwidth]{images/contact-viewall5}\\
+\includegraphics[width=0.19\textwidth]{images/contact-viewall6}
+\includegraphics[width=0.19\textwidth]{images/contact-viewall7}
+\includegraphics[width=0.19\textwidth]{images/contact-viewall8}
+\includegraphics[width=0.19\textwidth]{images/contact-viewall9}
+\includegraphics[width=0.19\textwidth]{images/contact-viewall10}
+\caption{The ten training grasps for the generative model. The final hand pose is shown in yellow, the sensed point cloud in black, and the parts of the point cloud that contribute to each contact model are coloured by the associated link. \label{fig:generative-training}}
+\end{figure*}
 \subsubsection{Contact models}
 When a grasp is demonstrated on the object the final hand pose is recorded. This is used to find all the finger links $L$ and surface features $x_j$ that are in close proximity. A contact model $M_i$ is built for each finger link $i$. Each feature in the object model that is within some distance $\delta_i$ of some finger link $L_i$ contributes to the contact model $\cm_i$ for that link. This contact model is defined for finger link $i$ as follows:
 \begin{equation}
@@ -43,19 +55,7 @@ The critical property of a contact model is that it is conditioned on local surf
 %  \caption{A training grasp and some contact models arising from it.}
 %  \label{fig:contactModels}
 %\end{figure*}
-\begin{figure*}[t]
-\includegraphics[width=0.19\textwidth]{images/contact-viewall1}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall2}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall3}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall4}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall5}\\
-\includegraphics[width=0.19\textwidth]{images/contact-viewall6}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall7}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall8}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall9}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall10}
-\caption{The ten training grasps for the generative model. The final hand pose is shown in yellow, the sensed point cloud in black, and the parts of the point cloud that contribute to each contact model are coloured by the associated link. \label{fig:generative-training}}
-\end{figure*}
+
 \subsection{Hand configuration model}
 In addition to a contact model for each finger link, a model of the hand configuration $h_c \in \mathbb R^D$ is recorded, where $D$ is the number of DoF in the hand. $h_c$  is recorded for several points on the demonstrated grasp trajectory as the hand closed. The learned model is:
 
@@ -68,7 +68,11 @@ where $w({h_c(\gamma)}) = \exp(-\alpha \|h_c(\gamma) - h^g_c \|^2)$; $\gamma$ is
 h_c(\gamma) = (1 - \gamma)h^g_c + \gamma h^t_c
 \label{eq:learning.configmodel.config}
 \end{equation}
-
+\begin{figure*}[t]
+  \includegraphics[width=\textwidth]{images/networkArchitecture.pdf}
+  \caption{The evaluative network architecture. The first 13 layers of the VGG network have been frozen. Transformed hand shape parameters and the VGG outputs are added. They are then passed through four fully connected RELU layers. The network output is the predicted probability of grasp success, obtained from one of the two outputs (success and failure probabilities) of the final softmax layer.}
+\label{fig:networkArchitecture}
+\end{figure*}
 \subsection{Grasp Transfer}
 When presented with a new object $o_{new}$ the contact models must be transferred to that object.  A partial point cloud of $o_{new}$ is acquired (here from a single view) and recast as a density, $\om_{new}$, again using \eq \ref{eq:om}. The transfer of each contact model $\cm_i$ is achieved by convolving $\cm_i$ with $\om_{new}$. This convolution can in practice be achieved approximately with a Monte-Carlo procedure, which results in an kernel density model of the pose $s$ of the finger link $i$ (in workspace coordinates) for the new object. The Monte-Carlo procedure produces sampled poses for link $L_i$ on the new object. The $j^{th}$ sample is $\hat{s}_{ij}=(\hat{p}_{ij},\hat{q}_{ij})$. For each sample $\hat{s}_{ij}$ the Monte-Carlo procedure produces a weight $w_{ij}$ equal to its likelihood.
 
@@ -92,4 +96,3 @@ This generate and improvement process can be run many times, thus enabling the g
 \subsection{Training Grasps for Our Study}
 
 For the purposes of our study, ten example grasps were provided. These are visualised in Figure~\ref{fig:generative-training}. In contrast to \cite{kopicki2015ijrr}, although seven views of each training object were taken, we trained a separate generative model for each view. This led to a total of 70 generative models being learned, one for each grasp-view combination. 
-

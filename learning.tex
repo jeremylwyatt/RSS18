@@ -1,8 +1,3 @@
-\begin{figure*}[t]
-  \includegraphics[width=\textwidth]{images/networkArchitecture.pdf}
-  \caption{The evaluative network architecture. The first 13 layers of the VGG network have been frozen. Transformed hand shape parameters and the VGG outputs are added. They are then passed through four fully connected RELU layers. The network output is the predicted probability of grasp success, obtained from one of the two outputs (success and failure probabilities) of the final softmax layer.}
-\label{fig:networkArchitecture}
-\end{figure*}
 
 The generative model used to generative grasps, explained in the previous section, works with a partial cloud with no assumptions about the object's weight, model, or friction parameters. In a fashion similar to \cite{Levine1}, it is possible to perform the generated grasps and record the outcome. The collective set of grasps and outcomes in simulation, accompanied with corresponding depth images, can be used to train a neural network that can predict whether new image, grasp pairs will succeed or not. This is the approach employed in this paper. 
 
@@ -25,7 +20,11 @@ H_{y'}(y) := - \sum_{i} ({y_i' \log(y_i) + (1-y_i') \log (1-y_i)})
 \end{equation}
 
 where $y = f(I_i, h_i)$ is the predicted grasp success of grasp $h_i$, and $I_i$ is the associated colorized depth image of grasp $h_i$.
-
+\begin{figure}
+  \includegraphics[width=\linewidth]{images/allObjects.pdf}
+  \caption{Sample objects from all classes in the 3D model dataset.}
+  \label{fig:allObjects}
+\end{figure}
 We trained our network on around 450000 grasps on 7000 distinct scenes, where each scene contains a random instantiation of one of the objects in the dataset with varying rigid body transformations applied, as well as friction and weight changes. The network was tested on 80000 grasps on 1200 scenes of unseen objects, as well as real robot experiments, as explained in Section \ref{section:experiments}. In order to make a direct comparison with Kopicki et al. \cite{kopicki2015ijrr}, we pick top grasps based on both the original ranking, as explained in Section \ref{section:generative}, and according to the predicted success probabilities by the network. 
 
 We opted to use a grasp success prediction network due to the fact that the grasp generator function, explained in the previous chapter, provides alternatives of most intuitive types of grasps. A logical extension of this work would be to pair our learning algorithm with a grasp generator network, which we consider as future work.
