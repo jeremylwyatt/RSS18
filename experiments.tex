@@ -7,8 +7,20 @@ To test our generative-evaluative learning architecture we compared the grasp it
   \label{fig:real-objects}
 \end{figure}
 
-The pure generative model architecture (GM) and the generative-evaluative architecture (GEA) were evaluated using a paired trials methodology. Each was presented with the same object-pose combinations. Each generated a ranked list of grasps, and the highest ranked grasp was executed. The highest-ranked grasp based on the predicted success probability of the network is performed on each scene. 
-
+A pure generative model architecture (GM) and the generative-evaluative architecture (GEA) were evaluated using a paired trials methodology. Each was presented with the same object-pose combinations. Each architecture generated a ranked list of grasps, and the highest ranked grasp was executed. The highest-ranked grasp based on the predicted success probability of the network is performed on each scene. A grasp was deemed successful if, when lifted, the object then remained stable in the hand for five seconds before being automatically released. The successes and failures for each method were recorded and are summarised in Table~\ref{tab:robot-results}. A two-tailed McNemar test, for the difference between success rates for paired comparison data, was performed and the difference between the two algorithms has a $p$-value of 0.0442, and so is statistically significant.
+\begin{table}
+\begin{center}
+\caption{Results of the real robot paired comparison trial.}
+\begin{tabular}{|c|c|c|c|}  \hline 
+          &                & \multicolumn{2}{ c |}{ GM} \\ \hline
+          &                & \# succs & \# fails  \\  \hline
+ GEA  & \# succs &  23 &  15  \\
+          & \# fails    &  5   &   6   \\ \hline
+\end{tabular}
+\end{center}
+\label{tab:robot-results}
+\end{table}
+A selection of grasps where the two methods performed differently are shown.
 %Training parameters for network. Training of example grasps for learning from demonstration. Creation of real test data set. Paired comparisons methodology with vanilla LFD algorithm (pose + object + camera view).
 %
 %The actual grasping tests have been performed on the real robot. 
