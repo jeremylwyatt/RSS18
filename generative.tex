@@ -43,6 +43,19 @@ The critical property of a contact model is that it is conditioned on local surf
 %  \caption{A training grasp and some contact models arising from it.}
 %  \label{fig:contactModels}
 %\end{figure*}
+\begin{figure*}[t]
+\includegraphics[width=0.19\textwidth]{images/contact-viewall1}
+\includegraphics[width=0.19\textwidth]{images/contact-viewall2}
+\includegraphics[width=0.19\textwidth]{images/contact-viewall3}
+\includegraphics[width=0.19\textwidth]{images/contact-viewall4}
+\includegraphics[width=0.19\textwidth]{images/contact-viewall5}\\
+\includegraphics[width=0.19\textwidth]{images/contact-viewall6}
+\includegraphics[width=0.19\textwidth]{images/contact-viewall7}
+\includegraphics[width=0.19\textwidth]{images/contact-viewall8}
+\includegraphics[width=0.19\textwidth]{images/contact-viewall9}
+\includegraphics[width=0.19\textwidth]{images/contact-viewall10}
+\caption{The ten training grasps for the generative model. The final hand pose is shown in yellow, the sensed point cloud in black, and the parts of the point cloud that contribute to each contact model are coloured by the associated link. \label{fig:generative-training}}
+\end{figure*}
 \subsection{Hand configuration model}
 In addition to a contact model for each finger link, a model of the hand configuration $h_c \in \mathbb R^D$ is recorded, where $D$ is the number of DoF in the hand. $h_c$  is recorded for several points on the demonstrated grasp trajectory as the hand closed. The learned model is:
 
@@ -78,18 +91,5 @@ This generate and improvement process can be run many times, thus enabling the g
 
 \subsection{Training Grasps for Our Study}
 
-For the purposes of our study, ten example grasps were provided. These are visualised in Figure (training grasps). In contrast to \cite{kopicki2015ijrr}, although seven views of each training object were taken, we trained a separate generative model for each view. This led to a total of 70 generative models being learned, one for each grasp-view combination. 
+For the purposes of our study, ten example grasps were provided. These are visualised in Figure~\ref{fig:generative-training}. In contrast to \cite{kopicki2015ijrr}, although seven views of each training object were taken, we trained a separate generative model for each view. This led to a total of 70 generative models being learned, one for each grasp-view combination. 
 
-\begin{figure*}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall1}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall2}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall3}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall4}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall5}\\
-\includegraphics[width=0.19\textwidth]{images/contact-viewall6}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall7}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall8}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall9}
-\includegraphics[width=0.19\textwidth]{images/contact-viewall10}
-\caption{The ten training grasps for the generative model. The final hand pose is shown in yellow, the sensed point cloud in black, and the parts of the point cloud that contribute to each contact model are coloured by the associated link. \label{fig:generative-training}}
-\end{figure*}
