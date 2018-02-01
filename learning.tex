@@ -1,6 +1,6 @@
 \begin{figure*}[t]
   \includegraphics[width=\textwidth]{images/networkArchitecture.pdf}
-  \caption{The network architecture for grasp success prediction. First 13 layers of the VGG network has been frozen in order to speed-up the training. Hand shape parameters and visual parameters are added together, and processed through 4 Fully Connected + RELU layer pairs. The outcome of the network is a grasp success probability, obtained from one of the two outputs of the final softmax layer (success and failure probabilities).}
+  \caption{The evaluative network architecture. The first 13 layers of the VGG network have been frozen. Transformed hand shape parameters and the VGG outputs are added. They are then passed through four fully connected RELU layers. The network output is the predicted probability of grasp success, obtained from one of the two outputs (success and failure probabilities) of the final softmax layer.}
 \label{fig:networkArchitecture}
 \end{figure*}
 

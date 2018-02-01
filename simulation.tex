@@ -54,3 +54,16 @@ In each scene $S_i$, a number of depth images are taken $\{I_{ik}\}_{k=0}^20$, i
 Once a grasp is performed in simulation, it is considered a success if an object is lifted 1 meters above the table, and held there for 2 seconds. If the object slips from the hand during lifting or holding operations and falls, the grasp is considered as failure. If the hand is still holding the object at the end of the duration, the grasp is considered as success. 
 
 Describe the method for creating the simulation so that it matches the real world. Database of objects. Estimating ranges for object mass, friction, pose variation. Simulation of depth camera images. Assumptions about mass distribution, hand modelling and modelling of articulation and dynamics. Creation of simulated grasp data set.
+
+\begin{figure*}[t]
+\includegraphics[width=0.24\textwidth]{images/Pan4_2_HFLW}
+\includegraphics[width=0.24\textwidth]{images/Pan4_2_LFLW}
+\includegraphics[width=0.24\textwidth]{images/Pan4_2_HFHW}
+\includegraphics[width=0.24\textwidth]{images/Pan4_2_LFHW}\\
+%\includegraphics[width=0.96\textwidth]{images/key-to-eval-training}\\
+\includegraphics[width=0.24\textwidth]{images/Pan4_HFLW}
+\includegraphics[width=0.24\textwidth]{images/Pan4_LFLW}
+\includegraphics[width=0.24\textwidth]{images/Pan4_HFHW}
+\includegraphics[width=0.24\textwidth]{images/Pan4_LFHW}
+\caption{Training a robust evaluation model. (Top row) The same pinch grasp, executed on the same object, with varying friction and mass parameters. (Bottom row) A more robust power grasp, executed on the same object, with the same variation in friction and mass. \label{fig:evaluative-training}}
+\end{figure*}
