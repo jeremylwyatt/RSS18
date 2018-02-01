@@ -1,14 +1,14 @@
+\begin{figure*}[t]
+  \includegraphics[width=\textwidth]{images/networkArchitecture.pdf}
+  \caption{The network architecture for grasp success prediction. First 13 layers of the VGG network has been frozen in order to speed-up the training. Hand shape parameters and visual parameters are added together, and processed through 4 Fully Connected + RELU layer pairs. The outcome of the network is a grasp success probability, obtained from one of the two outputs of the final softmax layer (success and failure probabilities).}
+\label{fig:networkArchitecture}
+\end{figure*}
+
 The generative model used to generative grasps, explained in the previous section, works with a partial cloud with no assumptions about the object's weight, model, or friction parameters. In a fashion similar to \cite{Levine1}, it is possible to perform the generated grasps and record the outcome. The collective set of grasps and outcomes in simulation, accompanied with corresponding depth images, can be used to train a neural network that can predict whether new image, grasp pairs will succeed or not. This is the approach employed in this paper. 
 
 It is time-consuming and expensive to collect real grasp data with using robotic arms with dexterous hands. Unlike gripper + arm combinations which require relatively less supervision \cite{Levine1}, dexterous hands can be much more fragile due to their complexity. Advances in physics simulators have made it possible to re-create robotic experiment setups in simulation. We created a simulated experimental setup in order evaluate grasp, which allowed us to collect as much data as needed in a short period of time with no supervision.
 
 In this section, we discuss the architecture of our grasp predictor network $f(I_t, h_t)$, where $I^t$ stands for a colorized depth image of the object, and $h_t = (h_{tw}, h_{tc})$ is the grasp parameters with respect to the camera used to acquire the depth image. The network outputs a grasp success probability between $[0,1]$ for any image $I_t$ and grasp $h_t$ pair. The reader is advised to refer to Section \ref{section:simulation} for details of data collection in simulation.
-
-\begin{figure*}[ht]
-  \includegraphics[width=\textwidth]{images/networkArchitecture.pdf}
-  \caption{The network architecture for grasp success prediction. First 13 layers of the VGG network has been frozen in order to speed-up the training. Hand shape parameters and visual parameters are added together, and processed through 4 Fully Connected + RELU layer pairs. The outcome of the network is a grasp success probability, obtained from one of the two outputs of the final softmax layer (success and failure probabilities).}
-\label{fig:networkArchitecture}
-\end{figure*}
 
 Our network architecture is given in Figure~\ref{fig:networkArchitecture}. The purpose of the network is to learn the relationship between the point cloud, given as a colorized depth image, and grasp (hand shape) parameters which encode the configuration of the hand with respect to the camera frame. This is a complex task, as the kinematic model of the hand is unknown to the network, and it has to consider each grasp as a black box: The network knows the inputs that configure the hand, including the joint positions, and only has access to the outcome in the form of success/failure. Implementation-wise, our network combines a version of VGG-16 network with inherited weights from training on ImageNet, with fully connected layers consisting of 1024 nodes each, followed by RELU layers. 
 % Talk more about the architecture
