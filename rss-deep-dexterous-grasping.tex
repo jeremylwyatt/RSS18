@@ -1,0 +1,232 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{times}
+\usepackage{graphicx}
+
+% numbers option provides compact numerical references in the text. 
+\usepackage[numbers]{natbib}
+\usepackage{multicol}
+\usepackage[bookmarks=true]{hyperref}
+\usepackage{amsthm,amssymb,amsmath}
+
+\newcommand{\eq}{Eq.~}
+\newcommand{\fig}{Fig.~}
+\newcommand{\tab}{Tab.~}
+\newcommand{\sect}{Sec.~}
+
+\newcommand{\re}{R}
+\newcommand{\rf}{R}
+\newcommand{\rl}{L}
+\newcommand{\om}{O}
+\newcommand{\cm}{M}
+\newcommand{\fm}{F}
+\newcommand{\hc}{C}
+\newcommand{\qd}{Q}
+\newcommand{\gpm}{T}
+\newcommand{\coll}{W}
+\newcommand{\pdf}{\mathbf{pdf}}
+
+\newcommand{\argmax}[1]{\underset{#1}{\operatorname{argmax}}\medspace}
+
+\pdfinfo{
+   /Author (Homer Simpson)
+   /Title  (Robots: Our new overlords)
+   /CreationDate (D:20101201120000)
+   /Subject (Robots)
+   /Keywords (Robots;Overlords)
+}
+
+\begin{document}
+
+% paper title
+\title{Deep Dexterous Grasping of Novel Objects from a Single View with a Generative-Evaluative Learner}
+
+% You will get a Paper-ID when submitting a pdf file to the conference system
+\author{Author Names Omitted for Anonymous Review. Paper-ID [add your ID here]}
+
+%\author{\authorblockN{Michael Shell}
+%\authorblockA{School of Electrical and\\Computer Engineering\\
+%Georgia Institute of Technology\\
+%Atlanta, Georgia 30332--0250\\
+%Email: mshell@ece.gatech.edu}
+%\and
+%\authorblockN{Homer Simpson}
+%\authorblockA{Twentieth Century Fox\\
+%Springfield, USA\\
+%Email: homer@thesimpsons.com}
+%\and
+%\authorblockN{James Kirk\\ and Montgomery Scott}
+%\authorblockA{Starfleet Academy\\
+%San Francisco, California 96678-2391\\
+%Telephone: (800) 555--1212\\
+%Fax: (888) 555--1212}}
+
+
+% avoiding spaces at the end of the author lines is not a problem with
+% conference papers because we don't use \thanks or \IEEEmembership
+
+
+% for over three affiliations, or if they all won't fit within the width
+% of the page, use this alternative format:
+% 
+%\author{\authorblockN{Michael Shell\authorrefmark{1},
+%Homer Simpson\authorrefmark{2},
+%James Kirk\authorrefmark{3}, 
+%Montgomery Scott\authorrefmark{3} and
+%Eldon Tyrell\authorrefmark{4}}
+%\authorblockA{\authorrefmark{1}School of Electrical and Computer Engineering\\
+%Georgia Institute of Technology,
+%Atlanta, Georgia 30332--0250\\ Email: mshell@ece.gatech.edu}
+%\authorblockA{\authorrefmark{2}Twentieth Century Fox, Springfield, USA\\
+%Email: homer@thesimpsons.com}
+%\authorblockA{\authorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
+%Telephone: (800) 555--1212, Fax: (888) 555--1212}
+%\authorblockA{\authorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
+
+
+\maketitle
+
+\begin{abstract}
+\input{abstract}
+\end{abstract}
+
+\IEEEpeerreviewmaketitle
+
+\section{Introduction}
+% * <jeremy.l.wyatt@gmail.com> 2018-01-29T09:05:33.799Z:
+% 
+% Dexterous grasping of novel objects. Learning from demonstration. Data efficiency and grasp transfer. Problem of not knowing whether a grasp is likely to succeed or fail. Note that deep grasping methods predict success from global information, but that they require numbers of training examples infeasible for current dexterous hands. Summarise technical contributions. Summarise overall architecture.
+% 
+% ^.
+
+\input{introduction}
+
+\section{Background and Related Work}
+
+% * <jeremy.l.wyatt@gmail.com> 2018-01-29T09:06:15.090Z:
+% 
+% %Give a good overview of the shape of both dexterous grasping, grasping novel objects, and deep networks for grasping.
+% 
+% Levine-both simulation and 800k grasping papers will be mentioned here. Our method does not perform any grasp planning. Our contribution is a grasp evaluation method that aims to understand the relationship between the point cloud and grasp parameters from the point of view of the camera. 
+% 
+% 
+% ^.
+
+\input{related}
+
+\section{Learning a Generative Grasp Model from Demonstration}
+
+%Describe, in new words, the method from IJRR.
+\input{generative} \label{section:generative}
+
+\section{The Evaluative Model} \label{section:learning}
+
+\input{learning}
+
+\section{Training the Evaluative Model from Simulation} \label{section:simulation}
+\input{simulation}
+
+\section{Real robot experiment}
+\label{section:experiments}
+\input{experiments}
+
+\section{Conclusion} 
+\label{sec:conclusion}
+
+The challenge for dexterous grasping of novel objects from a single view is to quickly generate feasible grasps, and to have some measure of confidence that they will succeed. The way we have addressed this is to use two learned models: one generative, one evaluative. First, we learn a generative model using a highly data efficient method for learning from demonstration. This learns a good prior over feasible grasps in a way that can be transferred to novel objects, from just ten exemplars. This generative model is then used to generate grasps for novel objects, tested in simulation, the results of which are used to train an evaluative model with a data intensive learning algorithm. By testing simulated grasps across unobservable parameters such as friction and mass we can create an evaluative model that is robust to unobservable variation. We showed experimentally that our generative-evalutive architecture  improves the grasp success rate on real novel objects from substantially, and this difference is statistically significant at 0.05. 
+
+\section*{Acknowledgments}
+
+%% Use plainnat to work nicely with natbib. 
+
+%\section{RSS citations}
+%
+%Please make sure to include \verb!natbib.sty! and to use the
+%\verb!plainnat.bst! bibliography style. \verb!natbib! provides additional
+%citation commands, most usefully \verb!\citet!. For example, rather than the
+%awkward construction 
+%
+%{\small
+%\begin{verbatim}
+%\cite{kalman1960new} demonstrated...
+%\end{verbatim}
+%}
+%
+%\noindent
+%rendered as ``\cite{kalman1960new} demonstrated...,''
+%or the
+%inconvenient 
+%
+%{\small
+%\begin{verbatim}
+%Kalman \cite{kalman1960new} 
+%demonstrated...
+%\end{verbatim}
+%}
+%
+%\noindent
+%rendered as 
+%``Kalman \cite{kalman1960new} demonstrated...'', 
+%one can
+%write 
+%
+%{\small
+%\begin{verbatim}
+%\citet{kalman1960new} demonstrated... 
+%\end{verbatim}
+%}
+%\noindent
+%which renders as ``\citet{kalman1960new} demonstrated...'' and is 
+%both easy to write and much easier to read.
+%  
+%\subsection{RSS Hyperlinks}
+%
+%This year, we would like to use the ability of PDF viewers to interpret
+%hyperlinks, specifically to allow each reference in the bibliography to be a
+%link to an online version of the reference. 
+%As an example, if you were to cite ``Passive Dynamic Walking''
+%\cite{McGeer01041990}, the entry in the bibtex would read:
+%
+%{\small
+%\begin{verbatim}
+%@article{McGeer01041990,
+%  author = {McGeer, Tad}, 
+%  title = {\href{http://ijr.sagepub.com/content/9/2/62.abstract}{Passive Dynamic Walking}}, 
+%  volume = {9}, 
+%  number = {2}, 
+%  pages = {62-82}, 
+%  year = {1990}, 
+%  doi = {10.1177/027836499000900206}, 
+%  URL = {http://ijr.sagepub.com/content/9/2/62.abstract}, 
+%  eprint = {http://ijr.sagepub.com/content/9/2/62.full.pdf+html}, 
+%  journal = {The International Journal of Robotics Research}
+%}
+%\end{verbatim}
+%}
+%\noindent
+%and the entry in the compiled PDF would look like:
+%
+%\def\tmplabel#1{[#1]}
+%
+%\begin{enumerate}
+%\item[\tmplabel{1}] Tad McGeer. \href{http://ijr.sagepub.com/content/9/2/62.abstract}{Passive Dynamic
+%Walking}. {\em The International Journal of Robotics Research}, 9(2):62--82,
+%1990.
+%\end{enumerate}
+%%
+%where the title of the article is a link that takes you to the article on IJRR's website. 
+%
+%
+%Linking cited articles will not always be possible, especially for
+%older articles. There are also often several versions of papers
+%online: authors are free to decide what to use as the link destination
+%yet we strongly encourage to link to archival or publisher sites
+%(such as IEEE Xplore or Sage Journals).  We encourage all authors to use this feature to
+%the extent possible.
+
+
+\bibliographystyle{plainnat}
+\bibliography{deep-grasping,references,main}
+
+\end{document}
+
+
