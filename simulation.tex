@@ -51,7 +51,6 @@ In each scene $S_i$, a number of depth images are taken $\{I_{ik}\}_{k=0}^20$, i
 
 Once a grasp is performed in simulation, it is considered a success if an object is lifted 1 meter above the table, and held there for another 2 seconds. If the object slips from the hand during lifting or holding, the grasp is a failure. 
 
-
 \begin{figure}[t]
 \includegraphics[width=\columnwidth]{images/frictionweight}
 %\includegraphics[width=0.24\textwidth]{images/Pan4_2_HFLW}
@@ -64,4 +63,10 @@ Once a grasp is performed in simulation, it is considered a success if an object
 %\includegraphics[width=0.24\textwidth]{images/Pan4_HFHW}
 %\includegraphics[width=0.24\textwidth]{images/Pan4_LFHW}
 \caption{Training a robust evaluation model. (Top row) The same pinch grasp, executed on the same object, with varying friction and mass parameters. (Bottom row) A more robust power grasp, executed on the same object, with the same variation in friction and mass. \label{fig:evaluative-training}}
+\end{figure}
+
+\begin{figure}[hb]
+  \includegraphics[width=\linewidth]{images/successvsranking.png}
+  \caption{Grasp success probability vs. grasp ranking in simulation.}
+  \label{fig:successvsranking}
 \end{figure}
