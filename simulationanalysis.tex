@@ -1,0 +1,27 @@
+In this section, we present an analysis of our generative-evaluative learning architecture using the simulation data we collected. The grasp success prediction accuracy of our network is 78\% for the training set, and 78.1\% for the test set. The test set collected in simulation contains no unique objects or classes having a single object, such as dustpan, hence its overall accuracy is slightly higher than training. A total of 441312 grasps in 7311 scenes, consisting of equal numbers of successes and failures, were used to train the algorithm presented in the previous section. Once the network was trained, it was used to predict outcomes of the grasps in the test set, which consists of 76213 grasps in 1241 scenes, containing 40243 successful and 35790 failed grasps. Each scene contains no more than 10 grasps of each 10 types, as a result, there are no scenes with more than 100 grasps. 
+
+The results of our analysis is provided in Figure \ref{fig:predictions}. In this table, GTS stands for "Ground Truth Success", or grasps which have succeeded in simulation. Similarly, GTF represents the grasps which failed. PS and PF are the subsets of graps which were predicted by our network as successes and failures, respectively. In this context, precision is the fraction of correctly labeled grasps among those predicted to be of a certain class (success or failure). Recall stands for the fraction of relevant grasps that have been identified correctly among all grasps that belong to that class. The results show a high recall rate for successful grasps, and there are relatively more false positives than false negatives. This necessitates pairing our evaluative neural network with a generative model rather than a random grasp generator, which would likely result in very low quality grasps and consequently, more false positives. 
+
+%To test our generative-evaluative learning architecture we compared the grasp it proposes to the grasp proposed by the generative learner alone. Since \citet{kopicki2015ijrr} showed a 77.7\% success rate with the original generative algorithm we generated a new test set that contained both more challenging objects and placed them in challenging poses. The difficulty single-view grasping with a depth camera depends greatly on the pose of the object relative to the camera. The set comprised 40 test objects (Figure~\ref{fig:real-objects}) and another six training objects. The training objects were used by the human to demonstrate ten example grasps (Figure~\ref{fig:generative-training}). The 40 test objects were used to generate 49 object-pose pairs. From the 40 objects, 35 belonged to object classes in the simulation dataset, while the remaining five do not. 
+
+Both generative model architecture (GM) and our proposed generative-evaluative learning architecture (GEA) rank grasps based on expected success, using different methods. Figure \ref{fig:successvsranking} compares grasp success probability of a grasp based on its ranking in the corresponding scene among all generated grasps. The re-ranking procedure introduced in GEA ensures that more high-quality grasps come on top, while the grasp success probability is reduced toward the higher end of the ranked list, as expected. On the other hand, the likelihood-based ranking of GM results in many promising grasps to be ranked towards the end, driving grasp probabilities lower. 
+
+%A pure generative model architecture (GM) and the generative-evaluative architecture (GEA) were evaluated using a paired trials methodology. Each was presented with the same object-pose combinations. Each architecture generated a ranked list of grasps, and the highest ranked grasp was executed. The highest-ranked grasp based on the predicted success probability of the network is performed on each scene. A grasp was deemed successful if, when lifted for five seconds, the object then remained stable in the hand for a further five seconds before being automatically released. The success rate for GM was 57.1\% and for GEA it was 77.6\%. The successes and failures for each method were recorded and are summarised in Table~\ref{tab:robot-results}. A two-tailed McNemar test, for the difference between success rates for paired comparison data, was performed and the difference between the two algorithms has a $p$-value of 0.0442, and so is statistically significant. A selection of grasps where the two methods performed differently are shown in Figure~\ref{fig:successfail}.
+
+% OLD TABLE
+%\begin{table}
+%\begin{center}
+%\caption{Results of the real robot paired comparison trial.}
+%\begin{tabular}{|c|c|c|c|}  \hline 
+%          &                & \multicolumn{2}{ c |}{ GM} \\ \hline
+%          &                & \# succs & \# fails  \\  \hline
+ %GEA  & \# succs &  23 &  15  \\
+ %         & \# fails    &  5   &   6   \\ \hline
+%\end{tabular}
+%\end{center}
+%\label{tab:robot-results}
+%\end{table}
+
+%Training parameters for network. Training of example grasps for learning from demonstration. Creation of real test data set. Paired comparisons methodology with vanilla LFD algorithm (pose + object + camera view).
+%
+%The actual grasping tests have been performed on the real robot. 
