@@ -1,36 +1,34 @@
 %Introductory sentences here
 
-Below, we list the key elements of data collection in simulation. In Section \ref{subsection:environment}, we talk about the features of our virtual setup. Section \ref{subsection:dataCollection} includes information about the methodology driving data acquisition, as well as the data structures. 
+Critically, the learned generative model is used to generate the data for training the evaluative model. To achieve this the generative model is presented with a simulated depth image of a scene containing a single unfamiliar object. Using this, grasps are generated and executed in simulation. The success or failure of each simulated grasp is recorded. Producing a good simulation for evaluating grasps is a non-trivial matter, and so we describe the choices we made below. A particularly important problem in our case is that the resulting data set must capture the uncertainty in unobservable variables, such as mass and friction. Our approach leads to what we term {\em robust evaluation}.
 
 \subsection{Features and Constraints of the Virtual Environment}
 \label{subsection:environment}
-
+In summary the main features of our grasp simulation are as follows.
 \begin{itemize}
 \item MuJoCo \cite{MuJoCo} has been chosen as the base physics simulator. 
-\item 3D Models 294 objects of 20 classes have been retrieved from online repositories.
-\item Each 3D model is decomposed into convex parts using V-HACD method \cite{V-HACD}.
-\item Distributions of weight and dimensions for each object class has been determined using real-world data. These distributions are later used in simulation to sample realistic objects.
+\item 3D models of 294 objects drawn from 20 categories are employed.
+\item To support dynamics simulation, each 3D model is decomposed into convex parts using V-HACD method \cite{V-HACD}.
+\item Prior distributions for mass, size and frictional coefficient were estimated using real-world data. The properties of simulated objects are sampled from these priors.
 \item MuJoCo is configured to use an impedance controller to control the DLR-II hand in simulation.
-\item In order to simulate the Carmine 1.09 depth sensor installed on the robot, a modified version of \cite{KinectSimulator} has been used. 
-\item The variations used in each scene consist of camera position, orientation and distance from the object, as well as object weight, friction, scale, location and orientation. 
-\item A near-perfect 3D model of DLR-II hand has been used to simulate the robotic hand. There are no kinematic constraints on how the hand can grasp an object, other than collisions with the virtual table where the objects reside. 
+\item In order to simulate the Carmine 1.09 depth sensor installed on the robot, a modified version of the Blensor Kinect sensor simulator \cite{KinectSimulator} has been used. 
+\item For each object, we varying the camera orientation and distance from the object, as well as object mass, friction, scale, location and orientation. 
+\item A 3D mesh-model of the DLR-II hand has been used in the simulator. There are no kinematic constraints on how the hand can grasp an object, other than collisions with the virtual table where the objects reside. 
 \end{itemize}
 
-In order to create a realistic simulation environment, we chose MuJoCo \cite{MuJoCo} physics simulator over other simulators/game engines OpenSim, BulletPhysics, ODE or NVIDIA PhysX, due to two reasons: 
+The reasons for the most critical of these decisions are now given in slightly more detail. First, in order to create a realistic simulation environment, we chose the MuJoCo \cite{MuJoCo} physics simulator over other simulators (OpenSim, BulletPhysics, ODE, NVIDIA PhysX) for two reasons: 
 \begin{itemize}
-\item MuJoCo uses generalized coordinates and optimization-based contact dynamics, resulting in less numerical instabilities,
-\item MuJoCo is optimized for quality of physics as well as speed, hence improving the quality of the physics simulation.
+\item MuJoCo uses generalized coordinates and optimization-based contact dynamics, resulting in fewer numerical instabilities,
+\item MuJoCo is optimized for the quality of physics as well as its speed, hence improving the quality of the physics simulation.
 \end{itemize}
 
-Due to the fact that MuJoCo needs objects to consist of convex parts for collision checks, all 294 objects in the 3D model dataset has been approximately decomposed into convex parts. Fig. \ref{fig:objectDecomposition} approximate decompositions of some objects in our dataset, using V-HACD algorithm \cite{V-HACD}. The number of sub-parts for all objects in our dataset varies between 2-120, depending on the complexity of each object. 
-
+Due to the fact that MuJoCo needs objects to consist of convex parts for collision checks, all 294 objects in the model dataset was decomposed into convex parts. Figure~\ref{fig:objectDecomposition} approximates decompositions of some objects in our dataset, using the V-HACD algorithm \cite{V-HACD}. The number of sub-parts for all objects in our dataset varies between 2-120. 
 \begin{figure}
   \includegraphics[width=\linewidth]{images/decomposition.png}
   \caption{Approximate convex decomposition of some objects in our dataset. Best viewed in colour.}
   \label{fig:objectDecomposition}
 \end{figure}
-
-The dataset of objects include bottles, bowls, cans, boxes, kitchen utensils, mugs, cups, pans and other graspable objects such as tennis balls and dust pans, as seen in Figure \ref{fig:allObjects}. All objects used in the simulation are chosen to be within the grasp affordance limits of the DLR-II hand. Our shape collection dataset consists of 294 objects from 20 classes. The number of objects in each class varies between 25 (bottles) and 1 (dustpan). 250 objects from all classes have been used for training the network, while the remaining 44 has been used for validation in simulation. The objects included in simulation are graspable everyday objects having different characteristics. Examples are kitchen objects such as bowls, plates, mugs and teacups, solid objects such as boxes and balls, kitchen utensils such as spatulas, spoons. Long/thin objects such as spatula, fork, spoon, knife classes are placed on a heavy cup vertically in order to make them graspable without touching the table. 
+The dataset of 294 objects is drawn from 20 classes and includes: bottles, bowls, cans, boxes, kitchen utensils, mugs, cups, pans and other graspable objects such as tennis balls and dust pans, as seen in Figure \ref{fig:allObjects}. All objects used in the simulation are chosen to have a size that is within the grasp aperture limit of the DLR-II hand. The number of objects in each class varies between 25 (bottles) and 1 (dustpan). 250 objects from all classes were used for training the network, while the remaining 44 were used for validation. The objects included in simulation are graspable everyday objects having different characteristics. Examples are kitchen objects such as bowls, plates, mugs and teacups, solid objects such as boxes and balls, kitchen utensils such as spatulas, spoons. Long/thin objects such as spatula, fork, spoon, knife classes are placed on a heavy cup vertically in order to make them graspable without touching the table. 
 
 \subsection{Data Collection Methodology}
 \label{subsection:dataCollection}
