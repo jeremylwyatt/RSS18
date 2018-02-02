@@ -70,3 +70,16 @@ Once a grasp is performed in simulation, it is considered a success if an object
   \caption{Grasp success probability vs. grasp ranking in simulation.}
   \label{fig:successvsranking}
 \end{figure}
+
+\begin{table}[h]
+\centering
+\caption{Precision and recall for grasp success predictions.}
+\label{fig:predictions}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+    & \multicolumn{2}{c|}{\#} & \multicolumn{2}{c|}{\%} \\ \hline
+    & PS         & PF         & PS         & PF         \\ \hline
+GTS & 33890      & 6353       & 84\%       & 16\%       \\ \hline
+GTF & 25631      & 10339     & 71\%       & 29\%       \\ \hline
+\end{tabular}
+\end{table}
