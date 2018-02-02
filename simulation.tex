@@ -33,10 +33,10 @@ The dataset of 294 objects is drawn from 20 classes and includes: bottles, bowls
 \subsection{Data Collection Methodology}
 \label{subsection:dataCollection}
 
-In order to fully learn the relationship between visual cues, grasp parameters and grasp success, we  considerthe hand as having a free joint where the only constraint on its movement is collisions with the table. We divided the data collection process into units called \textit{scenes}, where each scene has a single object placed on a table, and then a number of grasps are attempted in that scene, so as to pick up the object. Below, we specify the time flow of data collection:
+In order to fully learn the relationship between visual cues, grasp parameters and grasp success, we  consider the hand as having a free joint where the only constraint on its movement is collisions with the table. We divided the data collection process into units called \textit{scenes}, where each scene has a single object placed on a table, and then a number of grasps are attempted in that scene, so as to pick up the object. Below, we specify the time flow of data collection:
 
 \begin{enumerate}
-\item A novel instance of an object from the dataset is generated and placed on a virtual table. Variations applied include object position, orientation, scale, weight and friction coefficients.
+\item A novel instance of an object from the dataset is generated and placed on a virtual table. Variations applied include object position, orientation, scale, weight and friction coefficients. This variation is critical to ensuring that the evaluative model will predict the robustness of a grasp to variations in the conditions.
 \item A simulated depth camera takes a depth image $I_s$ of the scene, converting it into a point cloud $P_s$. The ${elevation}_s$ of the camera view point varies between 30-57 degrees, whereas the ${azimuth}_s$ is sampled from $[0, 2\pi]$. 
 \item The grasp generator algorithm by \citet{kopicki2015ijrr} is used to generate a number of candidate grasps $H = \{h_i\}_{i=0}^{K}$. The top 10 grasps from all 10 grasp types are picked and applied to the object in simulation.
 \item More simulated depth images are taken from other virtual cameras around the object. The locations and orientations of these cameras are determined based on the same distribution where the initial image was taken, as explained in step 2. Up to 20 images are acquired, and a random view is associated with each grasp created in step 3. 
