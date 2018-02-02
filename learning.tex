@@ -14,7 +14,7 @@ The hand trajectory $h_t$ comprises 10 way-points, each of 28 dimensions (20 for
 H_{y'}(y) := - \sum_{i} ({y_i' \log(y_i) + (1-y_i') \log (1-y_i)})
 \label{equation:crossentropy}
 \end{equation}
-where $y_i'$ is the ground truth success (1) or failure (0); $y = f(I_i, h_i)$ is the predicted grasp success of grasp trajectory $h_i$, and $I_i$ is the associated colorized depth image of grasp $h_i$.
+where $y_i'$ is the ground truth success (1) or failure (0); $y_i = f(I_i, h_i)$ is the predicted grasp success of grasp trajectory $h_i$, and $I_i$ is the associated colorized depth image of grasp $h_i$.
 \begin{figure}
   \includegraphics[width=\linewidth]{images/allObjects.pdf}
   \caption{Sample objects from all classes in the 3D model dataset.}

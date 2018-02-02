@@ -134,7 +134,7 @@
 
 The challenge for dexterous grasping of novel objects from a single view is to quickly generate feasible grasps, and to have some measure of confidence that they will succeed. The way we have addressed this is to use two learned models: one generative, one evaluative. First, we learn a generative model using a highly data efficient method for learning from demonstration. This learns a good prior over feasible grasps in a way that can be transferred to novel objects, from just ten exemplars. This generative model is then used to generate grasps for novel objects, tested in simulation, the results of which are used to train an evaluative model with a data intensive learning algorithm. By testing simulated grasps across unobservable parameters such as friction and mass we can create an evaluative model that is robust to unobservable variation. We showed experimentally that our generative-evalutive architecture  improves the grasp success rate on real novel objects from substantially, and this difference is statistically significant at 0.05. 
 
-\section*{Acknowledgments}
+%\section*{Acknowledgments}
 
 %% Use plainnat to work nicely with natbib. 
 
