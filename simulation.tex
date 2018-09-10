@@ -45,9 +45,9 @@ The data set is divided into units called \textit{scenes}, where each scene comp
 \begin{enumerate}
 \item A novel instance of an object from the dataset is generated and placed on a virtual table. Variations are applied to object pose, scale, mass, and friction coefficient.
 \item A simulated camera takes a depth image $I_s$ of the scene, converted to a point cloud $P_s$. The viewpoint ${elevation}_s$ of the view point is from 30-57 degrees. The ${azimuth}_s$ is sampled from $[0, 2\pi]$. 
-\item The generative model \citet{kopicki2015ijrr} is used to propose $K$ candidate grasps $H = \{h_i\}_{i=0}^{K}$. The top 10 grasps from all 10 grasp types are picked and applied to the object in simulation.
+\item The generative model proposes 100 candidate grasps. These are the 10 grasps that are highest ranked by the GM for each of the 10 training grasps. These applied to the object in simulation.
 \item 20 further simulated depth images are taken from other viewpoints around the object, as explained in step 2. Images with fewer than 250 depth points are discarded. We then sample with replacement from the remaining images and associate each sampled image and viewpoint with a grasp created in step 3.
-\item The grasp success outcome, grasp trajectory and depth image are stored for each trial. The grasp parameters are converted to the camera frame for the associated view.
+\item The grasp outcome, trajectory and depth image are stored for each trial. The grasp parameters are converted to the camera frame for the associated view.
 \end{enumerate}
 
 %Each candidate grasp $h_i = \{w_0, ..., w_{n}\}$ consists of a series of 10 waypoints along : $w_0$, ..., $w_{n}$. A waypoint $w_k$ is a 27-element vector that specifies full configuration of the hand in joint space: 3 dimensions for 3D coordinates and 4 dimensions for the orientation of the wrist, and 20 parameters specifying each finger joint's activation. 
@@ -73,4 +73,4 @@ Once a grasp is performed in simulation, it is considered a success if an object
 \end{figure}
 
 \subsection{Training methodology}
-A total of 441,312 grasps in 7,311 scenes, comprising equal numbers of successes and failures, were used to train the architecture presented in the previous section. The data set was balanced the data set by randomly eliminating excess failure grasps, as the underlying success rate across all candidate grasps was less than 50\%. We used the ADAM optimiser with learning rate 0.001 and a dropout rate of 0.3. We performed early stopping.
+A total of 441,312 grasps in 7,311 scenes, comprising equal numbers of successes and failures, were used to train the architecture presented in the previous section. The data set was balanced by randomly eliminating excess failure grasps, as the underlying success rate across all candidate grasps was 48\%. We used the ADAM optimiser with learning rate 0.001 and a dropout rate of 0.3. We performed early stopping.
