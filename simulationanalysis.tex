@@ -1,4 +1,4 @@
-This section presents a simulation analysis of the evaluative network. Recall that the generative-evaluative architecture (GEA) comprises both the generative model (GM) and the evaluative model (EM). We can evaluate aspects of these separately. After training, the EM was used to predict grasp outcomes in the test set. This comprised 1,241 scenes with 76,213 grasps. Of these, 40,243 succeeded and 35,970 failed. Our analysis is given in Figure~\ref{fig:predictions}. The sensitivity is 0.84 and the specificity 0.71. The F1-score is 0.802.
+This section presents a simulation analysis of the evaluative network. Recall that the generative-evaluative architecture (GEA) comprises both the generative model (GM) and the evaluative model (EM). We can evaluate aspects of these separately. After training, the EM was used to predict grasp outcomes in the test set. This comprised 1,241 scenes with 76,213 grasps. Of these, 40,243 succeeded and 35,970 failed. Our analysis is given in Table~\ref{fig:predictions}. The sensitivity is 0.84 and the specificity 0.71. The F1-score is 0.802.
 \begin{table}[b]
 \centering
 \caption{Confusion matrix for prediction on simulated data.}
@@ -18,7 +18,7 @@ This section presents a simulation analysis of the evaluative network. Recall th
 
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{images/successvsranking.pdf}
-  \caption{Ground truth grasp success probability (in simulation) vs. grasp ranking (by GM).}
+  \caption{Grasp success probability (in simulation) vs. grasp ranking.}
   \label{fig:successvsranking}
 \end{figure}
 
