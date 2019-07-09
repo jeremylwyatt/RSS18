@@ -86,3 +86,6 @@ This model, similarly with EM1, uses VGG-16 network as the visual model. All 16 
 TODO: More info will be added here after getting various details from Chao, including custom feature extraction layer and output dimensionality for VGG-16.
 
 All models were trained on simulated data and tested on the real robot, as well as in simulation. The next section focuses on the collection of the training data.
+
+\subsection{Training methodology}
+A total of 441,312 grasps in 7,311 scenes, comprising equal numbers of successes and failures, were used to train the architecture presented in the previous section. The data set was balanced by randomly eliminating excess failure grasps, as the underlying success rate across all candidate grasps was 48\%. We used the ADAM optimiser with learning rate 0.001 and a dropout rate of 0.3. We performed early stopping.
