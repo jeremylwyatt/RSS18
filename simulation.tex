@@ -1,12 +1,18 @@
 %Introductory sentences here
 In this section, we describe how we generated a realistic simulated data set for dexterous grasping. This captures variations in both observable (e.g. object pose) and unobservable (e.g. surface friction) parameters.
 
-To generate the training set a simulated depth image of a scene containing a single unfamiliar object is generated. Using the generative model, grasps are generated and executed in simulation. The success or failure of each simulated grasp is recorded. Producing a good simulation for evaluating grasps is non-trivial. An important problem is that the data set must capture the natural uncertainty in unobservable variables, such as mass and friction. This is related to domain randomisation. Domain randomisation can include unrealistic variations in appearance. Here, however, we only include variations within the known bounds of objects the robot may grasp. We thus refer to this as {\em robust evaluation}. A similar technique has been employed by \cite{mahler2017dex}, but we extend it from a grasp quality metric to full rigid body simulation.
+To generate the training set a simulated depth image of a scene containing a single unfamiliar object is generated. Using either of the generative models GM1 or GM2, grasps are generated and executed in simulation. The success or failure of each simulated grasp is recorded. Producing a good simulation for evaluating grasps is non-trivial. An important problem is that the data set must capture the natural uncertainty in unobservable variables, such as mass and friction. This is related to domain randomisation. Domain randomisation can include non-natural variations in appearance\cite{johns2016}. Here, however, we only include variations within the known bounds of real objects the robot may grasp. Since many of these parameters are unobservable we are thus creating a data set such that the grasp policy must work across a range of variations. We therefore refer to this as simulation for {\em robust evaluation}. A similar technique has been employed by \cite{mahler2017dex}, but we extend it from a single grasp quality metric to full rigid body simulation.
 
 \subsection{Features and Constraints of the Virtual Environment}
 \label{subsection:environment}
 
 We employ MuJoCo \cite{MuJoCo} as the rigid-body simulator. The dataset of 294 objects is drawn from 20 classes and includes: bottles, bowls, cans, boxes, kitchen utensils, mugs, cups, pans and other graspable objects such as tennis balls and dust pans (Figure \ref{fig:allObjects}). The number of objects in each class varies from 1 (dustpan) to 25 (bottles). 250 objects from all classes were used for training and 44 for testing. Long/thin objects are placed vertically in a short, heavy stand in order to make them graspable without touching the table. Due to the fact that collision checking in MuJoCo requires that objects comprise convex parts, all 294 objects were decomposed into convex parts \cite{V-HACD}. The number of sub-parts varies from 2 to 120. 
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{images/allObjects-small.pdf}
+  \caption{A sample of the 294 objects drawn from 16 of the 20 object classes.
+  \label{fig:allObjects}}
+\end{figure}
 
 To achieve robust simulation, prior distributions for mass, size and frictional coefficient were estimated from real-world data. The properties of simulated objects are sampled from these priors. For each object its mean size, mass and friction coefficient are matched to a real counterpart. For each trial, the size is randomly scaled by a factor in the range [0.9,1.1], while remaining within the grasp aperture of the hand. Object mass is uniformly sampled from a category specific range, estimated from real objects (Table~\ref{fig:weights}). The friction coefficient of each object is sampled from a range of $[0.5, 1]$ in MuJoCo default units, intended to simulate surfaces from low-friction (metal) to high-friction (rubber). This variation is critical to ensuring that the evaluative model will predict the robustness of a grasp to unobservable variations.
 \begin{table}[]
@@ -32,11 +38,11 @@ A 3D mesh-model of the DLR-II hand has been used in the simulator. There are no 
 %\item MuJoCo uses generalized coordinates and optimization-based contact dynamics, resulting in fewer numerical instabilities,
 %\item MuJoCo is optimized for the quality of physics as well as its speed, hence improving the quality of the physics simulation.
 %\end{itemize}
-%\begin{figure}
-%  \includegraphics[width=\linewidth]{images/decomposition.png}
-%  \caption{Approximate convex decomposition of some objects in our dataset. Best viewed in colour.}
-%  \label{fig:objectDecomposition}
-%\end{figure}
+\begin{figure}
+  \includegraphics[width=\linewidth]{images/decomposition.png}
+  \caption{Approximate convex decomposition of some objects in our dataset. Best viewed in colour.}
+  \label{fig:objectDecomposition}
+\end{figure}
 
 \subsection{Data Collection Methodology}
 \label{subsection:dataCollection}
@@ -46,7 +52,7 @@ The data set is divided into units called \textit{scenes}, where each scene comp
 \begin{enumerate}
 \item A novel instance of an object from the dataset is generated and placed on a virtual table. Variations are applied to object pose, scale, mass, and friction coefficient.
 \item A simulated camera takes a depth image $I_s$ of the scene, converted to a point cloud $P_s$. The viewpoint ${elevation}_s$ of the view point is from 30-57 degrees. The ${azimuth}_s$ is sampled from $[0, 2\pi]$. 
-\item The generative model proposes 100 candidate grasps. These are the 10 grasps that are highest ranked by the GM for each of the 10 training grasps. These are applied to the object in simulation.
+\item The chosen generative model (GM1 or GM2) proposes 100 candidate grasps. These are the 10 grasps that are highest ranked by the GM for each of the 10 training grasps. These are applied to the object in simulation.
 \item 20 further simulated depth images are taken from other viewpoints around the object, as explained in step 2. Images with fewer than 250 depth points are discarded. We then sample with replacement from the remaining images and associate each sampled image and viewpoint with a grasp created in step 3.
 \item The grasp outcome, trajectory and depth image are stored for each trial. The grasp parameters are converted to the camera frame for the associated view.
 \end{enumerate}
@@ -70,8 +76,5 @@ Once a grasp is performed in simulation, it is considered a success if an object
 %\includegraphics[width=0.24\textwidth]{images/Pan4_LFLW}
 %\includegraphics[width=0.24\textwidth]{images/Pan4_HFHW}
 %\includegraphics[width=0.24\textwidth]{images/Pan4_LFHW}
-\caption{Training a robust evaluation model. (Top row) The same pinch grasp, executed on the same object, with varying friction and mass parameters. (Bottom row) A more robust power grasp, executed on the same object, with the same variation in friction and mass. \label{fig:evaluative-training}}
+\caption{Creating a data set for robust evaluation. (Top row) The same pinch grasp, executed on the same object, with varying friction and mass parameters. (Bottom row) A more robust power grasp, executed on the same object, with the same variation in friction and mass. \label{fig:evaluative-training}}
 \end{figure}
-
-\subsection{Training methodology}
-A total of 441,312 grasps in 7,311 scenes, comprising equal numbers of successes and failures, were used to train the architecture presented in the previous section. The data set was balanced by randomly eliminating excess failure grasps, as the underlying success rate across all candidate grasps was 48\%. We used the ADAM optimiser with learning rate 0.001 and a dropout rate of 0.3. We performed early stopping.
