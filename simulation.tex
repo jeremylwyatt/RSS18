@@ -78,3 +78,5 @@ Once a grasp is performed in simulation, it is considered a success if an object
 %\includegraphics[width=0.24\textwidth]{images/Pan4_LFHW}
 \caption{Creating a data set for robust evaluation. (Top row) The same pinch grasp, executed on the same object, with varying friction and mass parameters. (Bottom row) A more robust power grasp, executed on the same object, with the same variation in friction and mass. \label{fig:evaluative-training}}
 \end{figure}
+
+Using this method, we generated a data set of 1 million simulated grasps using GM1 as the generative model and 1 million additional grasps using GM2. Each grasp can be replayed in Mujoco and the set can be decomposed for train and test purposes as required.

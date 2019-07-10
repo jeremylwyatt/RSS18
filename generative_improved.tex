@@ -1,6 +1,6 @@
 %% This section describes the improved generative method. Only the differences between the original method (given in the previous section) and the new methhod are explained here. 
 
-In this paper we also utilised a more advanced generative model, which we refer to as GM2. This model has four features which are different from the base model GM1. As for GM1 these are not a contribution of this paper and are described fully in \cite{kopicki2019ijrr}. For completeness we briefly describe the three differences between GM2 and GM1. 
+In this paper we also utilised a more advanced generative model, which we refer to as GM2. This model has three features which are different from the base model GM1. As for GM1, these are not a contribution of this paper and are described fully in \cite{kopicki2019ijrr}. For completeness, however, we briefly describe the three differences between GM2 and GM1. 
 
 \subsection{Object View Model}\label{sec:representations.object}
 The first difference is that the learning of grasp models is done per view, rather than per grasp. This means that for a training grasp made on an object viewed from seven viewpoints that there will be seven grasp models learned. This enables grasps to generalise better when the testing object to be grasped is thick and is only seen from a single view. The view based models allow a greater role to be played by the hand shape model and this enables generated grasps to have fingers which `float' behind a back surface that cannot be seen by the robot.

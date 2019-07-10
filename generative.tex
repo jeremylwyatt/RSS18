@@ -1,4 +1,4 @@
-This section describes the generative model learning upon which the paper builds. We employ the grasp generation technique of Kopicki et al.\cite{kopicki2015ijrr}, which learns a generative model of a dexterous grasp from a demonstration (LfD). That paper posed it as the problem of learning a factored probabilistic model. The method is split into a model learning phase, a model transfer phase, and the grasp generation phase. 
+This section describes the generative model learning upon which the paper builds. We employ two related grasp generation techniques\cite{kopicki2015ijrr, kopicki2019ijrr}, which both learn a generative model of a dexterous grasp from a demonstration (LfD). Those papers both posed the problem as one of learning a factored probabilistic model from a single example. The method is split into a model learning phase, a model transfer phase, and the grasp generation phase. 
 
 \subsection{Model learning}
 The model learning is split into three parts: acquiring an {\em object model}; using this object model, with a demonstrated grasp, to build a {\em contact model} for each finger link in contact with the object; and acquiring a {\em hand configuration model} from the demonstrated grasp. After learning the object model can be discarded.
@@ -78,8 +78,9 @@ where all the weights are normalised, $\sum_j w_{ij} = 1$. A query density is co
 %   \caption{The evaluative network architecture.}
 % \label{fig:networkArchitecture}
 % \end{figure*}
-% \subsection{Grasp generation}
-Candidate grasps may be generated as follows. Select a query density $k$ and take a sample  $s_k \sim \qd_{k}$. Then, take a sample $h_c \sim C$ from the hand configuration model. This pair of samples together define, via the hand kinematics, a complete grasp $h=(h_w,h_c)$, where $h_w$ is the pose of the wrist and $h_c$ is the configuration of the hand. The initial grasp is then improved by stochastic hill-climbing on a product of experts:
+
+\subsection{Grasp generation}
+Given a set of query densities and hand configuration models, candidate grasps may be generated as follows. Select a query density $k$ a random and take a sample  for a finger link pose on the new object $s_k \sim \qd_{k}$. Then, take a sample $h_c \sim C$ from the hand configuration model. This pair of samples together define, via the hand kinematics, a complete grasp $h=(h_w,h_c)$, where $h_w$ is the pose of the wrist and $h_c$ is the configuration of the hand. The initial grasp is then improved by stochastic hill-climbing on a product of experts:
 \begin{equation}
 \argmax{(h_w, h_c)} \hc(h_c) \prod_{\qd_i \in \mathcal{Q}} \qd_i\left(k_{i}^{\mathrm{for}}\left(h_w, h_c\right)\right)
 \label{eq:grasping.product}
