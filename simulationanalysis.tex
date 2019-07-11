@@ -26,6 +26,35 @@ We compared the EM and GM rankings (Figure~\ref{fig:successvsranking}). The x-ax
 
 We also investigated using the EM to improve grasps directly. Lu et al. \cite{lu2017planning} proposed gradient ascent on the input grasp parameters to the EM with respect to the predicted success probability. They initialised with a heuristic grasp. We initialise with the best grasp proposed by the GEA. We ran 20 and 100 epochs of gradient ascent on the EM network inputs. Although predicted success rate rises, the success rate in simulation declines. After 20 epochs it is 1.3\% lower and after 100 epochs it is 4.8\% lower than the actual success rate of the initial grasp. This suggests that optimising dexterous grasps by the EM is non-trivial, perhaps because of the high-dimensionality of the grasp space. We speculate that initialising with a random grasp would be even worse.
 
+\begin{table*}[]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+Variant \# & \multicolumn{2}{|c|}{Selected grasp} &  Succ \% &  GM & \multicolumn{5}{|c|}{Prediction Performance} \\ \hline
+ & Succs & Fails &  &  & TP & FP & TN & FN & Accuracy \\ \hline
+V1 & 1128   & 444 & 71.76\% & GM1 & & & & & \\ \hline
+V2 &     &  & & GM2 & & & & & \\ \hline
+V3 & 1352 & 187 & 87.85\% & GM1 & 37840 &	12226 & 39211 & 10244 & 77.42\% \\ \hline
+V4 &  1361 & 178 & 88.43\%& GM1 & 40234 &	14475 & 36962 & 7850 & 77.57\% \\ \hline
+V5 & 1361 & 178 & 88.43\%& GM1 & 39603 & 14122 &37315 & 8481	& 77.29\% \\ \hline
+V6 & 1375 & 164 & 89.34\% & GM1 & 37584 &	11514 & 39923 &10500	& 77.88\% \\ \hline
+V7 & 1363 & 176 & 88.56\% & GM1 & 39332 &	12020 & 39417 & 8752 & 79.13\% \\ \hline
+V8 & 1378 & 161 & 89.54\%& GM1 & 37832 &	11361 & 40076	& 10252 & 78.28\% \\ \hline
+V9 & 887 & 101 & 89.78\% & GM2 & 61866 &	11454& 38847& 11970 & 81.13\% \\ \hline
+V10 & 893 & 95 & 90.38\%& GM2 & 64309 &	12517 & 37784 & 9527 & 82.24\% \\ \hline
+V11 & 894 & 94 & 90.49\% & GM2 & 61611 & 9792 & 40509 & 12225 & 82.26\% \\ \hline
+V12 & GEA1 & VGG-16 & GD & GM1+GM2 & & & & & \\ \hline
+V13 & GEA2 & ResNet-50 & GD & GM1+GM2 & & & & & \\ \hline
+V14 & GEA3 & VGG-16 & GD & GM1+GM2 & & & & & \\ \hline
+V15 & GEA1 & VGG-16 & SA & GM1+GM2 & & & & & \\ \hline
+V16 & GEA2 & ResNet-50 & SA & GM1+GM2 & & & & & \\ \hline
+V17 & GEA3 & VGG-16 & SA & GM1+GM2 & & & & & \\ \hline
+\end{tabular}
+\caption{Simulation results for all variants tested. Note that GM1 and GM2 require different test-sets because these simulate the effect of having a different generative model. These test sets have different sizes due to differences in the data set generation process.}
+\label{table:Results-sim}
+\end{table*}
+
+
 %A pure generative model architecture (GM) and the generative-evaluative architecture (GEA) were evaluated using a paired trials methodology. Each was presented with the same object-pose combinations. Each architecture generated a ranked list of grasps, and the highest ranked grasp was executed. The highest-ranked grasp based on the predicted success probability of the network is performed on each scene. A grasp was deemed successful if, when lifted for five seconds, the object then remained stable in the hand for a further five seconds before being automatically released. The success rate for GM was 57.1\% and for GEA it was 77.6\%. The successes and failures for each method were recorded and are summarised in Table~\ref{tab:robot-results}. A two-tailed McNemar test, for the difference between success rates for paired comparison data, was performed and the difference between the two algorithms has a $p$-value of 0.0442, and so is statistically significant. A selection of grasps where the two methods performed differently are shown in Figure~\ref{fig:successfail}.
 
 % OLD TABLE
