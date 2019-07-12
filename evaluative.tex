@@ -4,27 +4,27 @@ The grasping system proposed, shown in Figure \ref{fig:systemArchitecture}, cons
 \centering
 \begin{tabular}{|l|l|l|l|l|l|l|}
 \hline
-Variant \# & Arch  & EM-Backbone & Optimisation  & Training Set \\ 
+Variant \# & GM  & EM & Optimisation  & Training Set \\ 
  & & & Method & \\ \hline
-V1 & GM1    & - & Sim Ann (SA) & 10 grasps  \\ \hline
-V2 & GM2    & - & SA & 10 grasps  \\ \hline
-V3 & GEA1 & VGG-16 & - & GM1 \\ \hline
-V4 & GEA2 & ResNet-50 & - & GM1 \\ \hline
-V5 & GEA3 & VGG-16 & - & GM1 \\ \hline
-V6 & GEA1 & VGG-16 & - & GM2 \\ \hline
-V7 & GEA2 & ResNet-50 & - & GM2 \\ \hline
-V8 & GEA3 & VGG-16 & - & GM2 \\ \hline
-V9 & GEA1 & VGG-16 & - & GM1+GM2 \\ \hline
-V10 & GEA2 & ResNet-50 & - & GM1+GM2 \\ \hline
-V11 & GEA3 & VGG-16 & - & GM1+GM2 \\ \hline
-V12 & GEA1 & VGG-16 & GD & GM1+GM2 \\ \hline
-V13 & GEA2 & ResNet-50 & GD & GM1+GM2 \\ \hline
-V14 & GEA3 & VGG-16 & GD & GM1+GM2 \\ \hline
-V15 & GEA1 & VGG-16 & SA & GM1+GM2 \\ \hline
-V16 & GEA2 & ResNet-50 & SA & GM1+GM2 \\ \hline
-V17 & GEA3 & VGG-16 & SA & GM1+GM2 \\ \hline
+V1 & GM1    & - & - & 10 grasps  \\ \hline
+V2 & GM2    & - & - & 10 grasps  \\ \hline
+V3 & GM1 & EM1 & - & GM1 \\ \hline
+V4 & GM1 & EM2 & - & GM1 \\ \hline
+V5 & GM1 & EM3 & - & GM1 \\ \hline
+V6 & GM1 & EM1 & - & GM1+GM2 \\ \hline
+V7 & GM1 & EM2 & - & GM1+GM2 \\ \hline
+V8 & GM1 & EM3 & - & GM1+GM2 \\ \hline
+V9 & GM2 & EM1 & - & GM1+GM2 \\ \hline
+V10 & GM2 & EM2 & - & GM1+GM2 \\ \hline
+V11 & GM2 & EM3 & - & GM1+GM2 \\ \hline
+V12 & GM1 & EM1 & GD & GM1+GM2 \\ \hline
+V13 & GM1 & EM2 & GD & GM1+GM2 \\ \hline
+V14 & GM1 & EM3 & GD & GM1+GM2 \\ \hline
+V15 & GM1 & EM1 & SA & GM1+GM2 \\ \hline
+V16 & GM1 & EM2 & SA & GM1+GM2 \\ \hline
+V17 & GM1 & EM3 & SA & GM1+GM2 \\ \hline
 \end{tabular}
-\caption{The evaluated combinations of architecture, training set and optimisation method.}
+\caption{The evaluated combinations of architecture, training set and optimisation method (Gradient Descent (GD) or Stochastic Simulated Annealing (SA).}
 \label{table:GEBreakdown}
 \end{table}
 
