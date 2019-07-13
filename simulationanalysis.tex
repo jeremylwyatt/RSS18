@@ -3,9 +3,11 @@ We assess each variant in two different ways. First, for any method with an eval
 
 We performed both analyses and the results are given in Table~\ref{table:Results-sim}. When assessing pure GM architectures, we can only measure the top ranked grasp success, since the GMs give a grasp likelihood according to the generative model not a probability of success. 
 
-The main findings are as follows. First, of the pure generative models GM2 outperforms GM1, with top ranked grasp successes of 79.05\% and 69.53\% respectively. Second, the GEA architectures all outperform both pure GM architectures, starting at 87.85\% of grasps succeeding (V3 based on proposals from GM1 and evaluation by EM3 trained on TS1). Third, the increase in training set size (adding GM2 to GM1) yields a small improvement, with reductions in the residual grasp failures of 1.12\%-9.55\% when comparing the same architectures under different training conditions. All the above results for GEA architectures use GM1 as the generative model. We can measure the effect of substituting this by GM2. This yields a further 0.43\% to 1.82\% reduction in error over GM1 under the same training conditions (training with TS1 and TS2). 
+The main findings are as follows. First, of the pure generative models GM2 outperforms GM1, with top ranked grasp successes of 79.05\% and 69.53\% respectively. Second, the GEA architectures all outperform both pure GM architectures, starting at 87.85\% of grasps succeeding (V3 based on proposals from GM1 and evaluation by EM3 trained on TS1). Third, the increase in training set size (adding GM2 to GM1) yields a further improvement. We can best measure this by considering the residual number of top grasps that fail as a percentage of the baseline (GM1). On this measure adding the additional data (variants V6-V9) improves performance (over variants V3-V5) by an average of 3\%. 
 
-It is informative to consider the relative size of the residual number of failed grasps relative to the baseline (pure generative model using GM1). We can see that overall the best model (V11) has just 31\%  of the failures that accrue to V1 (GM1).
+All the above results use GM1 as the generative model. We can measure the benefit of substituting this by GM2. This yields a further reduction in residual failures over GM1 under the same training conditions (training with DS1-Tr and DS2-Tr) of 3.5\%. 
+
+In summary, simulation results provide evidence that: pure GM2 outperforms GM1; adding training data improves results; and using GM2 as the generative model in the generative-evaluative architecture improves results. 
 
 %Recall that the generative-evaluative architecture (GEA) comprises both the generative model (GM) and the evaluative model (EM). 
 %We can evaluate aspects of these separately. After training, the EM was used to predict grasp outcomes in the test set. This comprised 1,241 scenes with 76,213 grasps. Of these, 40,243 succeeded and 35,970 failed. Our analysis is given in Table~\ref{fig:predictions}. The sensitivity is 0.84 and the specificity 0.71. The F1-score is 0.802.
@@ -44,18 +46,18 @@ We ran 20 and 100 epochs of gradient ascent on the EM network inputs. Although p
 Variant \# & \multicolumn{2}{|c|}{Selected grasp} &  Succ \% & Residual Fails & Test set / GM& \multicolumn{5}{|c|}{Prediction Performance} \\ \hline
  & Succs & Fails &  & as \% of V1 fails &  & TP & FP & TN & FN & Accuracy \\ \hline
 V1 & 1070   & 469 & 69.53\% & 100\% & GM1 & - & - & - & - & - \\ \hline
-V2 &  781   & 207 & 79.05\% & 69\% & GM2 & - & - & - & - & - \\ \hline
-V3 & 1352 & 187 & 87.85\% & 40\% & GM1 & 37840 &	12226 & 39211 & 10244 & 77.42\% \\ \hline
-V4 &  1361 & 178 & 88.43\% & 38\% & GM1 & 40234 &	14475 & 36962 & 7850 & 77.57\% \\ \hline
+V2 &  781   & 207 & 79.05\% & 68.7\% & GM2 & - & - & - & - & - \\ \hline
+V3 & 1352 & 187 & 87.85\% & 39.9\% & GM1 & 37840 &	12226 & 39211 & 10244 & 77.42\% \\ \hline
+V4 &  1361 & 178 & 88.43\% & 38.0\% & GM1 & 40234 &	14475 & 36962 & 7850 & 77.57\% \\ \hline
 
-V5 & 1361 & 178 & 88.43\% & 38\%& GM1 & 39603 & 14122 &37315 & 8481	& 77.29\% \\ \hline
+V5 & 1361 & 178 & 88.43\% & 38.0\%& GM1 & 39603 & 14122 &37315 & 8481	& 77.29\% \\ \hline
 
-V6 & 1375 & 164 & 89.34\% & 35\% & GM1 & 37584 &	11514 & 39923 &10500	& 77.88\% \\ \hline
-V7 & 1363 & 176 & 88.56\% & 38\% & GM1 & 39332 &	12020 & 39417 & 8752 & 79.13\% \\ \hline
-V8 & 1378 & 161 & 89.54\% & 34\% & GM1 & 37832 &	11361 & 40076	& 10252 & 78.28\% \\ \hline
-V9 & 887 & 101 & 89.78\% & 34\% & GM2 & 61866 &	11454& 38847& 11970 & 81.13\% \\ \hline
-V10 & 893 & 95 & 90.38\% & 32\% & GM2 & 64309 &	12517 & 37784 & 9527 & 82.24\% \\ \hline
-V11 & 894 & 94 & 90.49\% & 31\% & GM2 & 61611 & 9792 & 40509 & 12225 & 82.26\% \\ \hline
+V6 & 1375 & 164 & 89.34\% & 35.0\% & GM1 & 37584 &	11514 & 39923 &10500	& 77.88\% \\ \hline
+V7 & 1363 & 176 & 88.56\% & 37.5\% & GM1 & 39332 &	12020 & 39417 & 8752 & 79.13\% \\ \hline
+V8 & 1378 & 161 & 89.54\% & 34.3\% & GM1 & 37832 &	11361 & 40076	& 10252 & 78.28\% \\ \hline
+V9 & 887 & 101 & 89.78\% & 33.5\% & GM2 & 61866 &	11454& 38847& 11970 & 81.13\% \\ \hline
+V10 & 893 & 95 & 90.38\% & 31.6\% & GM2 & 64309 &	12517 & 37784 & 9527 & 82.24\% \\ \hline
+V11 & 894 & 94 & 90.49\% & 31.2\% & GM2 & 61611 & 9792 & 40509 & 12225 & 82.26\% \\ \hline
 V12 & & & & & & & & & & \\ \hline
 V13 & & & & & & & & & & \\ \hline
 V14 & & & & & & & & & & \\ \hline
@@ -66,7 +68,6 @@ V17 & & & & & & & & & & \\ \hline
 \caption{Simulation results for all variants tested.}
 \label{table:Results-sim}
 \end{table*}
-
 
 %A pure generative model architecture (GM) and the generative-evaluative architecture (GEA) were evaluated using a paired trials methodology. Each was presented with the same object-pose combinations. Each architecture generated a ranked list of grasps, and the highest ranked grasp was executed. The highest-ranked grasp based on the predicted success probability of the network is performed on each scene. A grasp was deemed successful if, when lifted for five seconds, the object then remained stable in the hand for a further five seconds before being automatically released. The success rate for GM was 57.1\% and for GEA it was 77.6\%. The successes and failures for each method were recorded and are summarised in Table~\ref{tab:robot-results}. A two-tailed McNemar test, for the difference between success rates for paired comparison data, was performed and the difference between the two algorithms has a $p$-value of 0.0442, and so is statistically significant. A selection of grasps where the two methods performed differently are shown in Figure~\ref{fig:successfail}.
 

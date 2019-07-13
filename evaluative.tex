@@ -4,27 +4,27 @@ The grasping system proposed, shown in Figure \ref{fig:systemArchitecture}, cons
 \centering
 \begin{tabular}{|l|l|l|l|l|l|l|}
 \hline
-Variant \# & GM  & EM & Optimisation  & Training Set \\ 
- & & & Method & \\ \hline
+Variant & GM/  & EM & Opt'  & Training Set \\ 
+ & Testset & & Meth' & \\ \hline
 V1 & GM1    & - & - & 10 grasps  \\ \hline
 V2 & GM2    & - & - & 10 grasps  \\ \hline
-V3 & GM1 & EM1 & - & GM1 \\ \hline
-V4 & GM1 & EM2 & - & GM1 \\ \hline
-V5 & GM1 & EM3 & - & GM1 \\ \hline
-V6 & GM1 & EM1 & - & GM1+GM2 \\ \hline
-V7 & GM1 & EM2 & - & GM1+GM2 \\ \hline
-V8 & GM1 & EM3 & - & GM1+GM2 \\ \hline
-V9 & GM2 & EM1 & - & GM1+GM2 \\ \hline
-V10 & GM2 & EM2 & - & GM1+GM2 \\ \hline
-V11 & GM2 & EM3 & - & GM1+GM2 \\ \hline
-V12 & GM1 & EM1 & GD & GM1+GM2 \\ \hline
-V13 & GM1 & EM2 & GD & GM1+GM2 \\ \hline
-V14 & GM1 & EM3 & GD & GM1+GM2 \\ \hline
-V15 & GM1 & EM1 & SA & GM1+GM2 \\ \hline
-V16 & GM1 & EM2 & SA & GM1+GM2 \\ \hline
-V17 & GM1 & EM3 & SA & GM1+GM2 \\ \hline
+V3 & GM1/DS1-Te & EM1 & - & DS1-Tr \\ \hline
+V4 & GM1/DS1-Te & EM2 & - & DS1-Tr \\ \hline
+V5 & GM1/DS1-Te & EM3 & - & DS1-Tr  \\ \hline
+V6 & GM1/DS1-Te & EM1 & - & DS1-Tr + DS2-Tr \\ \hline
+V7 & GM1/DS1-Te & EM2 & - & DS1-Tr + DS2-Tr \\ \hline
+V8 & GM1/DS1-Te & EM3 & - & DS1-Tr + DS2-Tr \\ \hline
+V9 & GM2/DS2-Te & EM1 & - & DS1-Tr + DS2-Tr \\ \hline
+V10 & GM2/DS2-Te & EM2 & - & DS1-Tr + DS2-Tr \\ \hline
+V11 & GM2/DS2-Te & EM3 & - & DS1-Tr + DS2-Tr \\ \hline
+V12 & GM1/DS1-Te & EM1 & GD & DS1-Tr + DS2-Tr \\ \hline
+V13 & GM1/DS1-Te & EM2 & GD & DS1-Tr + DS2-Tr \\ \hline
+V14 & GM1/DS1-Te & EM3 & GD & DS1-Tr + DS2-Tr \\ \hline
+V15 & GM1/DS1-Te & EM1 & SA & DS1-Tr + DS2-Tr \\ \hline
+V16 & GM1/DS1-Te & EM2 & SA & DS1-Tr + DS2-Tr \\ \hline
+V17 & GM1/DS1-Te & EM3 & SA & DS1-Tr + DS2-Tr \\ \hline
 \end{tabular}
-\caption{The evaluated combinations of architecture, training set and optimisation method (Gradient Descent (GD) or Stochastic Simulated Annealing (SA).}
+\caption{The evaluated combinations of architecture, generative model/test set, training set, and optimisation method (Gradient Descent (GD) or Stochastic Simulated Annealing (SA).}
 \label{table:GEBreakdown}
 \end{table}
 
@@ -34,7 +34,7 @@ These generative models do not, however, estimate a probability of success for t
 %The generative approach ignores the global information about the object, such as overall shape and the object category. The success of an executed grasp, however, depends on many contextual factors such as full object shape, mass, mass distribution and surface friction. An evaluative network can indirectly learn to predict grasp success from image data. 
 %The data provided to the evaluative network is collected from randomly generated scenes, therefore each scene has a different random combination of the parameters. The primary purpose of the network is to learn robust grasps across different conditions, and this is a complex task. The first challenge is that the kinematic model of the hand is unknown to the evaluative network. It only has access to the parameters that \textit{configure} the hand: the wrist and joint positions. Second, the system is weakly supervised with the grasp result (success or failure), and no further labels are provided.
 
-We tested three evaluative models. The first is based on the VGG-16 network \cite{Simonyan14c}, named Evaluative Model 1 (EM1), and shown in Figure \ref{fig:networkArchitecture2} (a). A version based on the ResNet-50 network, termed EM2, is shown in Figure \ref{fig:networkArchitecture2} (b). Finally, EM3 (Figure \ref{fig:networkArchitecture2} (c) is also based on VGG-16. Regardless of the type, a grasp evaluation network has the functional form $f(I_t, h_t)$, where $I_t$ is a colourised depth image of the object, and $h_t$ contains a series of wrist poses and joint configurations for the hand, converted to the camera's frame of reference. The network's output layer calculates a probability of success for the image-grasp pair $I_t$, $h_t$. The model initially processes the grasp parameters and visual information in separate channels, and combines them to learn the final output. 
+We tested three evaluative models. The first is based on the VGG-16 network \cite{Simonyan14c}, named Evaluative Model 1 (EM1), and shown in Figure \ref{fig:networkArchitecture2} (a). A version based on the ResNet-50 network, termed EM2, is shown in Figure \ref{fig:networkArchitecture2} (b). Finally, EM3 (Figure \ref{fig:networkArchitecture2} (c) is also based on VGG-16. Regardless of the type, a grasp evaluation network has the functional form $f(I_t, h_t)$, where $I_t$ is a colourised depth image of the object, and $h_t$ contains a series of wrist poses and joint configurations for the hand, converted to the camera's frame of reference. The network's output layer calculates a probability of success for the image-grasp pair $I_t$, $h_t$. The model initially processes the grasp parameters and visual information in separate channels, and combines them to feed into a feedforward pipeline that produces the output. 
 
 \begin{figure}[h]
   \includegraphics[width=0.9\linewidth]{images/colourDepth.pdf}
@@ -42,9 +42,9 @@ We tested three evaluative models. The first is based on the VGG-16 network \cit
 \label{fig:colorisedDepth}
 \end{figure}
 
-The depth image is colourised before it is passed as input to the evaluative network. The colourisation process converts the single-channel depth data to a 3-channel RGB image. We first crop the middle $460 \times 460$ section of the $640 \times 480$ depth image, and down-sample it to $224 \times 224$. Then, two more channels of information are added: mean and Gaussian curvatures, obtained from the object's surfaces in the image. Figure \ref{fig:colorisedDepth} contains four examples of colourised depth images. This procedure both provides a meaningful set of features to the network, and makes the input directly compatible with VGG-16 and ResNet, which require images of size $224 \times 224 \times 3$.
+The depth image is colourised before it is passed as input to the evaluative network. The colourisation process converts the single-channel depth data to a 3-channel RGB image. We first crop the middle $460 \times 460$ section of the $640 \times 480$ depth image, and down-sample it to $224 \times 224$. Then, two more channels of the same dimension are added corresponding to the mean and Gaussian curvatures. Figure~\ref{fig:colorisedDepth} contains four examples of colourised depth images. This procedure both provides a meaningful set of depth features to the network, and makes the input compatible with VGG-16 and ResNet, which require images of size $224 \times 224 \times 3$.
 
-The grasp parameter data $h_t$ consists of 10 trajectory waypoints represented by $27 \times 10 = 270$ floating point numbers, and 10 extra numbers reserved for the grasp type. Each of the 10 training grasps is treated as a different class, and $h_t$ uses the 1-of-N encoding system. Based on the grasp type ([1-10]), the corresponding entry is set to 1, while the rest remain 0. The grasp parameters are converted to the coordinate system of the camera which was used to obtain the corresponding depth image. The transformed parameters are processed using a Fully-Connected (FC) layer consisting of 1024 nodes, and the output is \textit{element-wise added} to the visual features. The joint visual features and grasp parameter data are processed together in higher layers.
+The grasp parameter data $h_t$ consists of 10 trajectory waypoints represented by $27 \times 10 = 270$ floating point numbers, and 10 extra numbers reserved for the grasp type. Each of the 10 training grasps is treated as a different class, and $h_t$ uses the 1-of-N encoding system. Based on the grasp type ([1-10]), the corresponding entry is set to 1, while the rest remain 0. The grasp parameters are converted to the coordinate system of the camera which was used to obtain the corresponding depth image. The transformed parameters are processed using a fully-connected (FC) layer consisting of 1024 nodes, and the output is \textit{element-wise added} to the visual features. The joint visual features and grasp parameter data are processed together in higher layers.
 
 All FC layers have RELU activation functions, except for the output layer, which has softmax activations. The output layer has two nodes, corresponding to the success and failure probabilities of the grasp. A cross-entropy loss is used to train the neural network, as given in \eq\ref{equation:crossentropy}.
 
@@ -54,7 +54,7 @@ H_{y'}(y) := - \sum_{i} ({y_i' \log(y_i) + (1-y_i') \log (1-y_i)})
 \end{equation}
 where $y_i'$ is the class label of the grasp, which is either 1 (success) or 0 (failure), and $y_i = f(I_i, h_i)$ is is the predicted label of the grasp pair ($I_i$, $h_i)$.
 
-The proposed evaluative models EM1-3 share the common features explained above. The models are now introduced below. Only their unique properties are highlighted.
+The proposed evaluative models EM1-3 share the common features explained above. The individual models are now introduced below. Only their unique properties are highlighted.
 
 \begin{figure*}[t]
 \centering
@@ -76,7 +76,7 @@ The proposed evaluative models EM1-3 share the common features explained above. 
 }
 % \end{center}
 
-\caption{The three evaluative network architectures presented in this paper. Similar to \cite{Levine1}, the two channels of information (visual data and grasp parameters) are processed in parallel and combined to reach the final decision in each model. RELU activations are used throughout the models, except for the final softmax layers. A final softmax layer has grasp success and and failure nodes, and learns to predict the success probability of a grasp. (a) VGG-16 based model in our previous paper \cite{icra}. The first 13 convolutional layers of VGG-16 are frozen. (b) ResNet50-based \cite{HeZRS15} proposed network. The first four blocks are used for feature extraction, and the rest of the network is used to learn joint features. (c) Third proposed model based on the VGG-16 arcihtecture. The information pathways are joined via concatenation, not addition.
+\caption{The three evaluative network architectures presented in this paper. Similar to \cite{Levine1}, the two channels of information (visual data and grasp parameters) are processed in parallel and combined to reach the final decision in each model. RELU activations are used throughout the models, except for the final softmax layers. A final softmax layer has grasp success and and failure nodes, and learns to predict the success probability of a grasp. (a) VGG-16 based model in our previous paper \cite{icra}. The first 13 convolutional layers of VGG-16 are frozen. (b) ResNet50-based \cite{HeZRS15} proposed network. The first four blocks are used for feature extraction, and the rest of the network is used to learn joint features. (c) Third proposed model based on the VGG-16 architecture. The information pathways are joined via concatenation, not addition.
 \label{fig:networkArchitecture2}}
 \end{figure*}
 
@@ -104,5 +104,5 @@ TODO: More info will be added here after getting various details from Chao, incl
 
 All models were trained on simulated data and tested on the real robot, as well as in simulation. The next section focuses on the collection of the training data.
 
-\subsection{Training methodology}
-A total of 441,312 grasps in 7,311 scenes, comprising equal numbers of successes and failures, were used to train the architecture presented in the previous section. The data set was balanced by randomly eliminating excess failure grasps, as the underlying success rate across all candidate grasps was 48\%. We used the ADAM optimiser with learning rate 0.001 and a dropout rate of 0.3. We performed early stopping.
+\subsection{EM Training Methodology}
+Variants V3-V5 were trained using DS1-Tr. Variants V6-V17 were trained using the combined data set from DS1-Tr and DS2-Tr. The ADAM optimiser was employed with learning rate 0.001, a dropout rate of 0.3, and early stopping.
