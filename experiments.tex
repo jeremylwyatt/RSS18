@@ -1,8 +1,10 @@
-We compared the best two proposed GEA methods listed in Table~\ref{table:GEBreakdown}, as well as both generative models (GM1 and GM2) on a real robot grasping. We employed the same real objects as described in \cite{kopicki2019ijrr}. This used 40 novel test objects (Figure~\ref{fig:real-objects}). Object-pose combinations were chosen to reduce the typical surface recovery. Some objects were employed in several poses, yielding 49 object-pose pairs. From the 40 objects, 35 belonged to object classes in the simulation dataset, while the remaining five did not. 
+We compared four variants on the real robot: V1, V2, V4 and V11. V1 and V2 are the pure generative models. V4 is, in simulation, the equal best generative-evaluative method using GM1 as the generative model. It uses EM2 as the evaluative model. V11 is, in simulation, the best performing generative-evaluative model using GM2 as the generative model. Thus, this selection allows us to compare the best generative-evaluative model with its counterpart pure generative model. 
 
-The difficulty of this new test-set was compared that of the previous one \cite{kopicki2015ijrr}. To make the two test-sets comparable the same set of five training grasps from \cite{kopicki2015ijrr} was used. The GM1 algorithm presented in \cite{kopicki2015ijrr} achieved a grasp success rate 77.8\% (35/45) on the original test set, but only 59.2\% (29/49) on the new test set. This is significant with a p-value of 0.043 under a one-tailed exact Fisher test. We therefore accept the hypothesis that the new data set of object-pose pairs is more challenging.
+We employed the same real objects as described in \cite{kopicki2019ijrr}. This used 40 novel test objects (Figure~\ref{fig:real-objects}). Object-pose combinations were chosen to reduce the typical surface recovery. Some objects were employed in several poses, yielding 49 object-pose pairs. From the 40 objects, 35 belonged to object classes in the simulation dataset, while the remaining five did not. 
 
-Both pure generative model architectures (GM1 and GM2) and the chosen generative-evaluative architectures (GEA) were evaluated using a paired trials methodology. Each was presented with the same object-pose combinations. Each architecture generated a ranked list of grasps, and the highest ranked grasp was executed. The highest-ranked grasp based on the predicted success probability of an evaluative network is performed on each scene. A grasp was deemed successful if, when lifted for five seconds, the object then remained stable in the hand for a further five seconds. The success rate for GM1 was 57.1\% and for the top-performing method based on GM1, GEA.1, it was 77.6\% (Table~\ref{tab:robot-results}). The success rate of the second baseline, GM2, is 81.6\%, while GEA.3 shows outperforms it with a success rate of 87.8\%. A two-tailed McNemar test, for the difference between success rates for paired comparison data, was performed. The difference between the two algorithms has a $p$-value of 0.0442, and so is statistically significant. A selection of grasps where the two methods performed differently are shown in Figure~\ref{fig:successfail}.
+Using this data-set all algorithms were evaluated on the real-robot using a paired trials methodology. Each was presented with the same object-pose combinations. Each variant generated a ranked list of grasps, and the highest ranked grasp was executed. The highest-ranked grasp based on the predicted success probability of an evaluative network is performed on each scene. A grasp was deemed successful if, when lifted for five seconds, the object then remained stable in the hand for a further five seconds. 
+
+%The success rate for GM1 was 57.1\% and for the top-performing method based on GM1, GEA.1, it was 77.6\% (Table~\ref{tab:robot-results}). The success rate of the second baseline, GM2, is 81.6\%, while GEA.3 shows outperforms it with a success rate of 87.8\%. A two-tailed McNemar test, for the difference between success rates for paired comparison data, was performed. The difference between the two algorithms has a $p$-value of 0.0442, and so is statistically significant. A selection of grasps where the two methods performed differently are shown in Figure~\ref{fig:successfail}.
 
 \begin{figure}
 \begin{center}
@@ -26,20 +28,33 @@ Both pure generative model architectures (GM1 and GM2) and the chosen generative
 %\label{tab:robot-results}
 %\end{table}
 
+
 \begin{table}
 \begin{center}
-\caption{Results of the real robot paired comparison trial.}
-\label{my-label}
-\begin{tabular}{|cc|c|c|l}
-\cline{1-4}
-                                           &         & \multicolumn{2}{c|}{GM} &  \\ \cline{3-4}
-                                           &         & \# succs    & \# fails    &  \\ \cline{1-4}
-\multicolumn{1}{|c|}{\multirow{2}{*}{GEA}} & \# succs & 23         & 15         &  \\
-\multicolumn{1}{|c|}{}                     & \# fails & 5          & 6          &  \\ \cline{1-4}
+\caption{Comparison of Variants on the real robot \label{tab:robot-results}}
+\begin{tabular}{|c|c|c|c|c|c|} \hline
+Alg & \# succ & \% succ & Alg & \# succ & \% succ \\ \hline
+V1  &  28 & 57.1\% & V4   & 37  & 75.5\% \\
+V2  & 40 & 81.6\% & V11 & 43  & 87.8\% \\
+\hline
 \end{tabular}
 \end{center}
-\label{tab:robot-results}
 \end{table}
+
+%\begin{table}
+%\begin{center}
+%\caption{Results of the real robot paired comparison trial.}
+%\label{my-label}
+%\begin{tabular}{|cc|c|c|l}
+%\cline{1-4}
+%                                           &         & \multicolumn{2}{c|}{GM} &  \\ \cline{3-4}
+%                                           &         & \# succs    & \# fails    &  \\ \cline{1-4}
+%\multicolumn{1}{|c|}{\multirow{2}{*}{GEA}} & \# succs & 23         & 15         &  \\
+%\multicolumn{1}{|c|}{}                     & \# fails & 5          & 6          &  \\ \cline{1-4}
+%\end{tabular}
+%\end{center}
+%\label{tab:robot-results}
+%\end{table}
 
 \begin{figure*}
 \begin{center}
