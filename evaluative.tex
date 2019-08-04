@@ -36,11 +36,11 @@ These generative models do not, however, estimate a probability of success for t
 
 We tested three evaluative models. The first is based on the VGG-16 network \cite{Simonyan14c}, named Evaluative Model 1 (EM1), and shown in Figure \ref{fig:networkArchitecture2} (a). A version based on the ResNet-50 network, termed EM2, is shown in Figure \ref{fig:networkArchitecture2} (b). Finally, EM3 (Figure \ref{fig:networkArchitecture2} (c) is also based on VGG-16. Regardless of the type, a grasp evaluation network has the functional form $f(I_t, h_t)$, where $I_t$ is a colourised depth image of the object, and $h_t$ contains a series of wrist poses and joint configurations for the hand, converted to the camera's frame of reference. The network's output layer calculates a probability of success for the image-grasp pair $I_t$, $h_t$. The model initially processes the grasp parameters and visual information in separate channels, and combines them to feed into a feedforward pipeline that produces the output. 
 
-\begin{figure}[h]
-  \includegraphics[width=0.9\linewidth]{images/colourDepth.pdf}
-  \caption[Colourised depth images.]{Colourised depth images. From left to right, the objects are: coke bottle, chocolate box, hand cream, and bowl.}
-\label{fig:colorisedDepth}
-\end{figure}
+%\begin{figure}[h]
+%  \includegraphics[width=0.9\linewidth]{images/colourDepth.pdf}
+%  \caption[Colourised depth images.]{Colourised depth images. From left to right, the objects are: coke bottle, chocolate box, hand cream, and bowl.}
+%\label{fig:colorisedDepth}
+%\end{figure}
 
 The depth image is colourised before it is passed as input to the evaluative network. The colourisation process converts the single-channel depth data to a 3-channel RGB image. We first crop the middle $460 \times 460$ section of the $640 \times 480$ depth image, and down-sample it to $224 \times 224$. Then, two more channels of the same dimension are added corresponding to the mean and Gaussian curvatures. Figure~\ref{fig:colorisedDepth} contains four examples of colourised depth images. This procedure both provides a meaningful set of depth features to the network, and makes the input compatible with VGG-16 and ResNet, which require images of size $224 \times 224 \times 3$.
 
