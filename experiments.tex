@@ -19,6 +19,21 @@ V2  & 40 & 81.6\% & V11 & 43  & 87.8\% \\
 \end{center}
 \end{table}
 
+\begin{figure}[t]
+\begin{center}
+\includegraphics[width=\columnwidth]{plots/A6fA10s_vertical.png}
+\caption{V2 vs V11. This shows grasps from methods based on generative model GM2. The V2 grasps are shown in columns 1-2. The corresponding V11 grasps are shown in columns 3-4. This figure shows the cases where V2 failed and V11 succeeded. \label{fig:v2fv11s}}
+\end{center}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[width=\columnwidth]{plots/A6fA10f_vertical.png}\\
+\includegraphics[width=\columnwidth]{plots/A6sA10f_vertical.png}
+\caption{V2 vs V11. This shows grasps from methods based on generative model GM2. The V2 grasps are shown in columns 1-2. The corresponding V11 grasps are shown in columns 3-4. The top row shows the case where both V2 and V11 failed. The bottom row shows the case where V2 succeeded and V11 failed. \label{fig:v2fsv11f}}
+\end{center}
+\end{figure}
+
 
 We compared four variants on the real robot: V1, V2, V4 and V11. V1 and V2 are the pure generative models. V4 is, in simulation, the equal best generative-evaluative method using GM1 as the generative model. It uses EM2 as the evaluative model. V11 is, in simulation, the best performing generative-evaluative method using GM2 as the generative model. This selection allows us to compare the best generative-evaluative methods with their counterpart pure generative models. 
 
@@ -74,21 +89,6 @@ The results are shown in Table~\ref{tab:robot-results}. In each case, the GEA va
 \caption{V1 vs V4. This shows grasps from methods based on generative model GM1. The V1 grasps are shown in columns 1-2 and 5-6. The corresponding V4 grasps are shown in columns 3-4 and 7-8. The left hand panel shows the cases where both V1 and V4 failed. The right hand panel shows the cases where V1 succeeded and V4 failed. \label{fig:v1fsv4f}}
 \end{center}
 \end{figure*}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=\columnwidth]{plots/A6fA10s_vertical.png}
-\caption{V2 vs V11. This shows grasps from methods based on generative model GM2. The V2 grasps are shown in columns 1-2. The corresponding V11 grasps are shown in columns 3-4. This figure shows the cases where V2 failed and V11 succeeded. \label{fig:v2fv11s}}
-\end{center}
-\end{figure}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=\columnwidth]{plots/A6fA10f_vertical.png}\\
-\includegraphics[width=\columnwidth]{plots/A6sA10f_vertical.png}
-\caption{V2 vs V11. This shows grasps from methods based on generative model GM2. The V2 grasps are shown in columns 1-2. The corresponding V11 grasps are shown in columns 3-4. The top row shows the case where both V2 and V11 failed. The bottom row shows the case where V2 succeeded and V11 failed. \label{fig:v2fsv11f}}
-\end{center}
-\end{figure}
 
 %\begin{figure*}
 %\includegraphics[width=\textwidth]{images/successfailure.pdf}
