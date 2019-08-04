@@ -17,12 +17,12 @@ V8 & GM1/DS1-Te & EM3 & - & DS1-Tr + DS2-Tr \\ \hline
 V9 & GM2/DS2-Te & EM1 & - & DS1-Tr + DS2-Tr \\ \hline
 V10 & GM2/DS2-Te & EM2 & - & DS1-Tr + DS2-Tr \\ \hline
 V11 & GM2/DS2-Te & EM3 & - & DS1-Tr + DS2-Tr \\ \hline
-V12 & GM1/DS1-Te & EM1 & GD & DS1-Tr + DS2-Tr \\ \hline
-V13 & GM1/DS1-Te & EM2 & GD & DS1-Tr + DS2-Tr \\ \hline
-V14 & GM1/DS1-Te & EM3 & GD & DS1-Tr + DS2-Tr \\ \hline
-V15 & GM1/DS1-Te & EM1 & SA & DS1-Tr + DS2-Tr \\ \hline
-V16 & GM1/DS1-Te & EM2 & SA & DS1-Tr + DS2-Tr \\ \hline
-V17 & GM1/DS1-Te & EM3 & SA & DS1-Tr + DS2-Tr \\ \hline
+V12 & GM1/DS1-Te & EM3 & GD1 & DS1-Tr + DS2-Tr \\ \hline
+V13 & GM1/DS1-Te & EM3 & GD2 & DS1-Tr + DS2-Tr \\ \hline
+V14 & GM1/DS1-Te & EM3 & GD3 & DS1-Tr + DS2-Tr \\ \hline
+V15 & GM1/DS1-Te & EM3 & SA1 & DS1-Tr + DS2-Tr \\ \hline
+V16 & GM1/DS1-Te & EM3 & SA2 & DS1-Tr + DS2-Tr \\ \hline
+V17 & GM1/DS1-Te & EM3 & SA3 & DS1-Tr + DS2-Tr \\ \hline
 \end{tabular}
 \caption{The evaluated combinations of architecture, generative model/test set, training set, and optimisation method (Gradient Descent (GD) or Stochastic Simulated Annealing (SA).}
 \label{table:GEBreakdown}
@@ -60,23 +60,23 @@ The proposed evaluative models EM1-3 share the common features explained above. 
 \centering
 % \begin{center}
 \subfloat[Evaluative Model 1]{%
-  \includegraphics[width=0.95\textwidth]{images/networkArchitecture.pdf}
+  \includegraphics[width=0.9\textwidth]{images/networkArchitecture.pdf}
 }
 % \end{center}
 
 % \begin{center}
 \subfloat[Evaluative Model 2]{%
-    \includegraphics[width=0.85\textwidth]{images/ResNet.pdf}
+    \includegraphics[width=0.8\textwidth]{images/ResNet.pdf}
 }
 % \end{center}
 
 % \begin{center}
 \subfloat[Evaluative Model 3]{%
-    \includegraphics[width=0.75\textwidth]{images/ChaoNet.png}
+    \includegraphics[width=0.8\textwidth]{images/Chaonet_newpic.pdf}
 }
 % \end{center}
 
-\caption{The three evaluative network architectures presented in this paper. Similar to \cite{Levine1}, the two channels of information (visual data and grasp parameters) are processed in parallel and combined to reach the final decision in each model. RELU activations are used throughout the models, except for the final softmax layers. A final softmax layer has grasp success and and failure nodes, and learns to predict the success probability of a grasp. (a) A VGG-16 based model, where the first 13 convolutional layers of VGG-16 are frozen. (b) ResNet50-based \cite{HeZRS15} network. The first four blocks are used for feature extraction, and the rest of the network is used to learn joint features. (c) Second model based on the VGG-16 architecture. The information pathways are joined via concatenation, not addition.
+\caption{The three evaluative network architectures presented in this paper. Similar to \cite{Levine1}, the two channels of information (visual data and grasp parameters) are processed in parallel and combined to reach the final decision in each model. RELU activations are used throughout the models, except for the final softmax layers. A final softmax layer has grasp success and and failure nodes, and learns to predict the success probability of a grasp. (a) A VGG-16 based model, where the first 13 convolutional layers of VGG-16 are frozen. (b) ResNet50-based \cite{HeZRS15} network. The first four blocks are used for feature extraction, and the rest of the network is used to learn joint features. (c) Second model based on the VGG-16 architecture. In EM3, the information pathways are joined via concatenation, not addition.
 \label{fig:networkArchitecture2}}
 \end{figure*}
 
