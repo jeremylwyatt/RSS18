@@ -17,9 +17,9 @@ V8 & GM1/DS1-Te & EM3 & - & DS1-Tr + DS2-Tr \\ \hline
 V9 & GM2/DS2-Te & EM1 & - & DS1-Tr + DS2-Tr \\ \hline
 V10 & GM2/DS2-Te & EM2 & - & DS1-Tr + DS2-Tr \\ \hline
 V11 & GM2/DS2-Te & EM3 & - & DS1-Tr + DS2-Tr \\ \hline
-V12 & GM1/DS1-Te & EM3 & GD1 & DS1-Tr + DS2-Tr \\ \hline
-V13 & GM1/DS1-Te & EM3 & GD2 & DS1-Tr + DS2-Tr \\ \hline
-V14 & GM1/DS1-Te & EM3 & GD3 & DS1-Tr + DS2-Tr \\ \hline
+V12 & GM1/DS1-Te & EM3 & GA1 & DS1-Tr + DS2-Tr \\ \hline
+V13 & GM1/DS1-Te & EM3 & GA2 & DS1-Tr + DS2-Tr \\ \hline
+V14 & GM1/DS1-Te & EM3 & GA3 & DS1-Tr + DS2-Tr \\ \hline
 V15 & GM1/DS1-Te & EM3 & SA1 & DS1-Tr + DS2-Tr \\ \hline
 V16 & GM1/DS1-Te & EM3 & SA2 & DS1-Tr + DS2-Tr \\ \hline
 V17 & GM1/DS1-Te & EM3 & SA3 & DS1-Tr + DS2-Tr \\ \hline
@@ -106,7 +106,7 @@ EM3, contrary to EM1 and EM2, uses convolutional layers for feature extraction w
 All models were trained and tested on simulated data. In addition, EM2 and EM3 were tested on the real robot setup. The next section focuses on the collection of the training data.
 
 \subsection{EM training methodology}
-Variants V3-V5 were trained using DS1-Tr. Variants V6-V17 were trained using the combined data set from DS1-Tr and DS2-Tr. The ADAM optimiser was employed with starting learning rate of 0.01, a dropout rate of 0.3, and early stopping. We halve the learning rate every 5 epochs during training.
+Variants V3-V5 were trained using DS1-Tr. Variants V6-V17 were trained using the combined data set from DS1-Tr and DS2-Tr. The Gradient Descent(GD) optimiser was employed with starting learning rate of 0.01, a dropout rate of 0.3, and early stopping. We halve the learning rate every 5 epochs during training.
 
 \subsection{Grasp optimisation using the EM}
 
