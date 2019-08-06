@@ -10,7 +10,7 @@ The collected 3D model dataset contains 294 objects from 20 classes, namely, bot
 
 We employ MuJoCo \cite{MuJoCo} as the rigid-body simulator. Due to the fact that collision checking in MuJoCo requires that objects comprise convex parts, all 294 objects were decomposed into convex parts using V-HACD algorithm \cite{V-HACD}. The number of sub-parts varies from 2 to 120.
 
-During the scene creation, the object is placed on the virtual table at a pseudo-random pose. Most objects are placed in a canonical upright pose, and only randomly rotated around the gravity axis (akin to being placed on a turntable). The objects belonging to the mug and cup classes have fully random 3D rotations applied before they are placed on the table, since it is possible to grasp them in almost any setting using the robot hand.
+During the scene creation, the object is placed on the virtual table at a pseudo-random pose. Most objects are placed in a canonical upright pose, and only randomly rotated around the gravity axis (akin to a turntable). The objects belonging to the mug and cup classes have fully random 3D rotations, since it is possible to grasp them in almost any setting.
 
 \begin{figure}
   \includegraphics[width=\linewidth]{images/allObjects-small.pdf}
