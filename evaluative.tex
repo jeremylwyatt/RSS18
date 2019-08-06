@@ -83,9 +83,9 @@ The individual models are now introduced below. Only their unique properties are
 
 \subsection{Evaluative Model 1 (EM1)}
 
-Figure~\ref{fig:networkArchitecture2} (a) shows the architecture of the first proposed evaluative network. The colourised depth image is processed with the VGG-16 network \cite{Simonyan14c} to obtain the high-level image features. We froze the first 13 layers, only training the last 3, in order to reduce overfitting.
+Figure~\ref{fig:networkArchitecture2} (a) shows the architecture of the first proposed evaluative network. The colourised depth image is processed with the VGG-16 network \cite{Simonyan14c} to obtain the image features. We froze the first 13 layers, in order to reduce overfitting.
 
-The grasp parameters and image features pass through fully-connected layers with 1024 hidden nodes (FC-1024) layers in order to obtain two feature vectors of length 1024. The features are combined using the element-wise addition operation, and feed into 4 FC-1024 layers. Similarly with \cite{Levine1}, the features are combined using addition and not concatenation. This follows the observation that addition yielded a marginally better performance in the experiments. Furthermore, concatenation and addition can be considered as interchangeable operations in this context \cite{dumoulin2018feature-wise}. The final FC-1024 layers form the associations between the visual features and hand parameters, and contain most of the trainable parameters in the network. 
+The grasp parameters and image features pass through two FC-1024 layers in order to obtain two feature vectors of length 1024. The features are combined using the element-wise addition operation, and fed into 4 FC-1024 layers. Similarly with \cite{Levine1}, we use addition, not concatenation. This follows the observation that addition yielded a marginally better performance in the experiments. Furthermore, concatenation and addition can be considered as interchangeable operations in this context \cite{dumoulin2018feature-wise}. The final FC-1024 layers form the associations between the visual features and hand parameters, and contain most of the trainable parameters in the network.
 
 \subsection{Evaluative Model 2 (EM2)}
 
@@ -95,7 +95,7 @@ The grasp parameters and image features pass through fully-connected layers with
 % \label{fig:ResNet}
 % \end{figure}
 
-EM2 (Figure~\ref{fig:networkArchitecture2} (b)) uses ResNet-50 architecture in order to obtain the image features. In the EM2 architecture, ResNet-50 network is broken down into two parts: the first 4 convolutional blocks are used to extract the visual features. The final convolutional block, which has 9 convolutional layers, combines the image features and grasp parameters. The last block is initialised randomly. Similarly with EM1, element-wise addition joins the two channels of information. Spatial tiling is used to convert the processed grasp parameters, a vector of size $1024$, to a matrix of size $14 \times 14 \times 1024$. Because the last convolutional block processes combined information, this network is designed with only 2 FC layers with 64 hidden nodes each. The output layer is the same as EM1. 
+EM2 (Figure~\ref{fig:networkArchitecture2} (b)) uses ResNet-50 architecture in order to obtain the image features. In the EM2 architecture, ResNet-50 network is broken down into two parts: the first 4 convolutional blocks are used to extract the visual features. The final block, which has 9 randomly-initialised convolutional layers, combines the image features and grasp parameters. Similarly with EM1, element-wise addition joins the two channels of information. Spatial tiling is used to convert the processed grasp parameters, a vector of size $1024$, to a matrix of size $14 \times 14 \times 1024$. Because the last block processes combined information, this network is designed with only 2 FC-64 layers. The output layer is the same as EM1.
 
 \subsection{Evaluative Model 3 (EM3)}
 
