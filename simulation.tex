@@ -53,7 +53,7 @@ Some classes are easier to grasp than others. Table \ref{fig:graspperf} shows th
 \begin{table}[]
 \centering
 \caption{The average and \textbf{top} grasp success rates (\%) of GM1 on simulated data.}
-\label{fig:weights}
+\label{fig:graspperf}
 \resizebox{\linewidth}{!}{\begin{tabular}{|l|l|l|l|l|l|l|}
 \hline
 Bottle & Bowl     & Box     & Can     & Cup    & Fork    & Pan     \\ \hline
@@ -117,7 +117,7 @@ Once a grasp is performed in simulation, it is considered a success if an object
 \caption{Creating a data set for robust evaluation. (Top row) The same pinch grasp, executed on the same object, with varying friction and mass parameters. (Bottom row) A more robust power grasp, executed on the same object, with the same variation in friction and mass. \label{fig:evaluative-training}}
 \end{figure}
 
-Using this method, we generated a data set (DS1) of 1.28 million simulated grasps using GM1 as the generative model and a data set of 1.136 million additional grasps (DS2) using GM2 \footnote{Visit \href{https://rusen.github.io/DDG/}{this website} to download the data.}. Each grasp in DS1-test and DS2 can be replayed in MuJoCo and the sets are decomposed for train, validation and test purposes. We give details of the statistics in Table~\ref{tab:data} including the way that we break down the data-set into training, validation and test subsets. The ratio of successful grasps in the dataset is less than 50\% for GM1, and is more than 50\% for GM2. In order to have a balanced training set, the number of successful and unsuccessful grasps have been equalised by under-sampling the failure cases in GM1 and over-sampling the failure cases for GM1. No balancing was performed for GM1/2 validation and test sets.
+Using this method, we generated a data set (DS1) of 1.28 million simulated grasps using GM1 as the generative model and a data set of 1.136 million additional grasps (DS2) using GM2 \footnote{Visit \href{https://rusen.github.io/DDG/}{this website} to download the data.}. Each grasp in DS1-test and DS2 can be replayed in MuJoCo and the sets are decomposed for train, validation and test purposes. We give details of the statistics in Table~\ref{tab:data} including the way that we break down the data-set into training, validation and test subsets. The ratio of successful grasps in the dataset is less than 50\% for GM1, and is more than 50\% for GM2. In order to have a balanced training set, DS1 and DS2 only contain scenes that have at least one successful grasp. During training, the number of successful and unsuccessful grasps have been equalised by under-sampling the failure cases in DS1 and over-sampling the failure cases for DS2. No balancing was performed for the validation and test sets.
 \begin{table*}[t]
 \centering
 \caption{Statistics of the simulated data sets.}

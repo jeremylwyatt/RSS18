@@ -99,23 +99,23 @@ The second evaluative model, termed EM2 (Figure~\ref{fig:networkArchitecture2} (
 
 \subsection{Evaluative Model 3 (EM3)}
 
-This model, similar to EM1 (Figure~\ref{fig:networkArchitecture2} (c)), uses VGG-16 as the base visual model. All 16 layers of VGG-16 are trained. The hand trajectory parameters pass through a feature extraction network before being concatenated with the visual features. Two fully connected layers of higher capacity than EM1-2, contain 4096 hidden nodes each and join the two pathways. A final 2-node FC layer with softmax activation is added to obtain the final decision.
+This model, similarly with EM1 (Figure~\ref{fig:networkArchitecture2} (c)), uses VGG-16 as the base visual model. All 16 layers of VGG-16 are trained. The hand trajectory parameters pass through a feature extraction network before being concatenated with the visual features. Two fully connected layers of higher capacity than EM1-2, contain 4096 hidden nodes each and join the two pathways. A final 2-node FC layer with softmax activation is added to obtain the final decision.
 
-EM3, contrary to EM1 and EM2, uses convolutional layers for feature extraction when processing input grasp trajectories. The trajectory processing pathway is identical to the VGG-16 architecture in that it contains 5 blocks, consisting of a total 13 convolutional layers. The sizes under the blocks are input dimensions. Global Average Pooling (GAP) is performed to obtain 512 features coming from both sides, and they are concatenated to get the combined feature vector of 1024, which further runs through two FC-4096 layers.
+EM3, contrary to EM1 and EM2, uses convolutional layers for feature extraction when processing input grasp trajectories. The trajectory processing pathway is identical to the VGG-16 architecture in that it contains 5 blocks, consisting of a total 13 convolutional layers. The convolutional filters have a width of 3. The sizes under the blocks are input dimensions. Global Average Pooling (GAP) is performed to obtain 512 features coming from both sides, which are concatenated and run through two FC-4096 layers.
 
-All models were trained and tested on simulated data. In addition, EM2 and EM3 were tested on the real robot setup. The next section focuses on the collection of the training data.
+All models were trained and tested on simulated data. EM2 and EM3 were tested on the real robot setup. 
 
 \subsection{EM training methodology}
-Variants V3-V5 were trained using DS1-Tr \footnote{10\% of DS1-Tr failure cases are sampled from the grasps that collide with the table, and we preserved the colliding grasps in DS1-V. This was done to ensure EMs do not propose such grasps in real robot experiments.}. Variants V6-V17 were trained using the combined data set from DS1-Tr and DS2-Tr \footnote{All grasps that collide with the table were removed from DS2-Tr and DS2-V. The filtering became unnecessary since the overall quality of grasps by GM2 is better.}. The Gradient Descent(GD) optimiser was employed with starting learning rate of 0.01, a dropout rate of 0.5, and early stopping. We halve the learning rate every 5 epochs during training.
+Variants V3-V5 were trained using DS1-Tr \footnote{10\% of DS1-Tr failure cases are sampled from the grasps that collide with the table, and we preserved the colliding grasps in DS1-V. This was done to ensure EMs do not propose such grasps in real robot experiments.}. Variants V6-V17 were trained using the combined data set from DS1-Tr and DS2-Tr \footnote{The grasps that collide with the table were removed from DS2. Filtering became unnecessary since the overall quality of grasps by GM2 is better.}. The Gradient Descent(GD) optimiser was employed with starting learning rate of 0.01, a dropout rate of 0.5, and early stopping. We halve the learning rate every 5 epochs during training.
 
 \subsection{Grasp optimisation using the EM}
 
-So far we have considered only Generative-Evaluative architectures where the Evaluative Model merely ranks the grasp proposals. As proposed by Lu et al. \cite{lu2017planning} we may also use the EM to improve grasp proposals. This boils down to searching the grasp space driven by the EM as the objective function. This may be by gradient ascent or simulated annealing. The methods V12-17 use V8 as the objective function, hence V8 should be treated as the baseline. We employed both gradient descent based optimisation and simulated annealing.
+So far we have considered only Generative-Evaluative architectures where the Evaluative Model merely ranks the grasp proposals. As proposed by Lu et al. \cite{lu2017planning} we may also use the EM to improve grasp proposals. This boils down to searching the grasp space driven by the EM as the objective function. This may be by gradient ascent or simulated annealing. The methods V12-17 use V8 as the objective function, hence V8 should be treated as the baseline. We employed both gradient based optimisation and simulated annealing.
 
 \subsubsection{Gradient based optimisation}
 Lu et al. \cite{lu2017planning} proposed gradient ascent (GA), modifying the grasp parameters input to the EM with respect to the output predicted success probability. They initialised with a heuristically selected pre-grasp. We initialise with the highest ranked grasp according to the EM. We investigated three variants:
 \begin{itemize}
-\item GA1: Shifts the position of the all waypoints in the grasp trajectory equally. The gradient is the average gradient of the EM output across all 10 waypoints
+\item GA1: Shifts the position of the all waypoints in the grasp trajectory equally. The gradient is the average position gradient across all 10 waypoints.
 \item GA2: Tunes the hand configuration by tuning the angle of each finger joint. Every finger joint at each waypoint is treated independently.
 \item GA3: Performs GA1 and GA2 simultaneously.
 \end{itemize}
