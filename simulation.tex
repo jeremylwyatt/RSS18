@@ -34,7 +34,7 @@ Jug    & Knife    & Mug     & Funnel  & Ball   & Dustpan &         \\ \hline
 \end{tabular}}
 \end{table}
  
-For depth image simulation the Carmine 1.09 depth sensor installed on the robot is simulated with a modified version of the Blensor Kinect sensor simulator \cite{KinectSimulator}. For each object, we vary the camera orientation and distance from the object, as well as object mass, friction, scale, location and orientation. In order to account for calibration errors in the real world setup, we add a small three-dimensional positional noise to each point in the sensor output.
+For depth image simulation the Carmine 1.09 depth sensor installed on the robot is simulated with a modified version of the Blensor Kinect sensor simulator \cite{KinectSimulator}. For each object, we vary the camera orientation and distance from the object, as well as object mass, friction, scale, location and orientation. We add a small three-dimensional positional noise to each point in the sensor output to simulate calibration errors.
 
 A 3D mesh-model of the DLR-II hand has been used in the simulator. There are no kinematic constraints on how the hand may grasp an object, other than collisions with the table. To ensure realism, we use impedance control for the hand.
 %The reasons for the most critical of these decisions are now given in slightly more detail. First, in order to create a realistic simulation environment, we chose the MuJoCo \cite{MuJoCo} physics simulator over other simulators (OpenSim, BulletPhysics, ODE, NVIDIA PhysX) for two reasons: 
@@ -48,7 +48,7 @@ A 3D mesh-model of the DLR-II hand has been used in the simulator. There are no 
   \label{fig:objectDecomposition}
 \end{figure}
 
-Some classes are easier to grasp than others. Table \ref{fig:graspperf} shows the success rates of the generated grasps in each class, when attempted with the grasps ranked by the Generative Model (GM1). The sampled grasps perform well on a number of classes including Dustpans, Scissors, Spoons, and Mugs. Some objects can only be grasped in certain ways, i.e. not all 10 training grasps are applicable to all objects.
+Table \ref{fig:graspperf} shows the success rates of the generated grasps in each class, when attempted with the grasps ranked by the Generative Model (GM1). The sampled grasps perform well on a number of classes including Dustpans, Scissors, Spoons, and Mugs. Some objects can only be grasped in certain ways, i.e. not all 10 training grasps are applicable to all objects.
 
 \begin{table}[]
 \centering
@@ -83,14 +83,14 @@ Jug    & Knife    & Mug     & Funnel  & Ball   & Dustpan &         \\ \hline
 \subsection{Data Collection Methodology}
 \label{subsection:dataCollection}
 
-The data set is divided into units called \textit{scenes}, where each scene comprises a single object placed on a table. This object has a specific set of physical parameters, chosen as described below. Many views and grasps are attempted per scene. Below, we specify the time flow of data collection:
+The data set is divided into units called \textit{scenes}, where each scene comprises a single object placed on a table. This object has a specific set of physical parameters, as described below. Many views and grasps are attempted per scene. Below, we specify the time flow of data collection:
 
 \begin{enumerate}
 \item A novel instance of an object from the dataset is generated and placed on a virtual table. Variations are applied to object pose, scale, mass, and friction coefficients.
 \item A simulated camera takes a depth image $I_s$ of the scene, converted to a point cloud $P_s$. The viewpoint ${elevation}_s$ of the view point is from 30-57 degrees. The ${azimuth}_s$ is sampled from $[0, 2\pi]$. 
-\item The positions of all points in the point cloud $P_s$ are shifted by a three-dimensional noise vector sampled from a Gaussian distribution with parameters $\mu=0$ and $\sigma = 0.004$ (unit: meter).
-\item Given $P_s$, the chosen generative model (GM1 or GM2) proposes the candidate grasps. For GM1, up to100 grasps are selected. These are the 10 grasps that are highest ranked by the GM for each of the 10 training grasps. For GM2, we select a maximum of 500 grasps: up to 50 grasps from each training grasp.
-\item The grasps are applied to the object in simulation. Before the execution of each grasp, we run a collision check with the virtual table (without the object). If any part of the hand touches the table during this test, the grasp is marked as \textit{collided}, and not executed.
+\item All points in the point cloud $P_s$ are shifted by a three-dimensional vector sampled from a Gaussian distribution with parameters $\mu=0$ and $\sigma = 0.004$ (unit: meter).
+\item Given $P_s$, the chosen generative model (GM1 or GM2) proposes the candidate grasps. For GM1 and GM2, we choose up to 10 and 50 top grasps per each one of the 10 training grasps, respectively.
+\item The grasps are applied to the object in simulation. Before the execution of each grasp, we run a collision check with the virtual table (without the object). The grasps that fail this test are marked as \textit{collided}.
 \item 19 further simulated depth images are taken from other viewpoints around the object, as explained in step 2. Images with fewer than 250 depth points are discarded. We then sample with replacement from the remaining images and associate each sampled image and viewpoint with a grasp created in step 3.
 \item The grasp outcome, trajectory and depth image are stored for each trial. The grasp parameters are converted to the camera frame for the associated view.
 \end{enumerate}
@@ -99,7 +99,7 @@ The data set is divided into units called \textit{scenes}, where each scene comp
 %After a grasp $h_i$ is generated in world coordinates, the waypoints that belong to the grasp are converted to the camera's frame of reference. 
 %The goal of our network architecture is to learn which grasps are more likely to succeed given a point cloud, where both input channels are represented in terms of the camera frame of reference. %This point differentiates us from the work of Levine et al. \cite{Levine1}, where camera coordinates are not used. It should be noted that the possible camera locations in our simulated data covers a larger space, with full circular movement $[0, 2\pi]$ on azimuth and $[30-57]$ range in elevation. Our scenes do not have any distinguishing landmarks such as a bin or robot base, which may aid the network in locating the camera in the scene. 
 
-In each scene $S_i$, a number of depth images are taken $\{I_{ik}\}_{k=0}^{20}$, in the manner explained above. The first image $I_{i0}$ is used to generate grasps, as explained in Section \ref{section:generative}. We typically perform 10-500 grasps per scene. Attaching different views to each grasp instead of the seed image $I_{i0}$ ensures there is more variation in terms of viewpoints, resulting in a richer dataset. Typically, performing a grasp takes half the time it takes to acquire an image using the simulated camera.
+In each scene $S_i$, a number of depth images are taken $\{I_{ik}\}_{k=0}^{20}$, in the manner explained above. The first image $I_{i0}$ is used to generate grasps, as explained in Section \ref{section:generative}. We typically perform 100-500 grasps per scene. Attaching different views to each grasp instead of the seed image $I_{i0}$ ensures there is more variation in terms of viewpoints, resulting in a richer dataset.
 
 Once a grasp is performed in simulation, it is considered a success if an object is lifted one metre above the table, and held there for two seconds. If the object slips from the hand during lifting or holding, the grasp is a failure. 
 
@@ -117,7 +117,7 @@ Once a grasp is performed in simulation, it is considered a success if an object
 \caption{Creating a data set for robust evaluation. (Top row) The same pinch grasp, executed on the same object, with varying friction and mass parameters. (Bottom row) A more robust power grasp, executed on the same object, with the same variation in friction and mass. \label{fig:evaluative-training}}
 \end{figure}
 
-Using this method, we generated a data set (DS1) of 1.28 million simulated grasps using GM1 as the generative model and a data set of 1.136 million additional grasps (DS2) using GM2 \footnote{Visit \href{https://rusen.github.io/DDG/}{this website} to download the data.}. Each grasp in DS1-test and DS2 can be replayed in MuJoCo and the sets are decomposed for train, validation and test purposes. We give details of the statistics in Table~\ref{tab:data} including the way that we break down the data-set into training, validation and test subsets. The ratio of successful grasps in the dataset is less than 50\% for GM1, and is more than 50\% for GM2. In order to have a balanced training set, DS1 and DS2 only contain scenes that have at least one successful grasp. During training, the number of successful and unsuccessful grasps have been equalised by under-sampling the failure cases in DS1 and over-sampling the failure cases for DS2. No balancing was performed for the validation and test sets.
+Using this method, we generated a data set (DS1) of 1.28 million simulated grasps using GM1 as the generative model and a data set of 1.136 million additional grasps (DS2) using GM2 \footnote{Visit \href{https://rusen.github.io/DDG/}{this website} to download the data.}. Each grasp in DS1-test and DS2 can be replayed in MuJoCo and the sets are decomposed for train, validation and test purposes. We give the dataset statistics in Table~\ref{tab:data}. The ratio of successful grasps in the dataset is less than 50\% for GM1, and is more than 50\% for GM2. In order to have a balanced training set, DS1 and DS2 only contain scenes that have at least one successful grasp. During training, the datasets were balanced by under-sampling the failure cases in DS1-Tr and over-sampling the failure cases for DS2-Tr. No balancing was performed for the validation and test sets.
 \begin{table*}[t]
 \centering
 \caption{Statistics of the simulated data sets.}
