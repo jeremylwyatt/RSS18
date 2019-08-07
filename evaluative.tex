@@ -99,9 +99,9 @@ EM2 (Figure~\ref{fig:networkArchitecture2} (b)) uses ResNet-50 architecture in o
 
 \subsection{Evaluative Model 3 (EM3)}
 
-This model, similarly with EM1 (Figure~\ref{fig:networkArchitecture2} (c)), uses VGG-16 as the base visual model. All 16 layers of VGG-16 are trained. The hand trajectory parameters pass through a feature extraction network before being concatenated with the visual features. The combined part of the network contains two high-capacity FC-4096 layers, followed by a FC2+softmax layer.
+This model, as for EM1 (Figure~\ref{fig:networkArchitecture2} (c)), uses VGG-16 as the visual backbone. All 16 layers of VGG-16 are trained. The hand trajectory parameters pass through a feature extraction network before being concatenated with the visual features. The combined part of the network contains two high-capacity FC-4096 layers, followed by a FC2+softmax layer.
 
-EM3, contrary to EM1 and EM2, uses convolutional layers for processing input grasp trajectories. The trajectory sub-network is similar to the VGG-16 architecture in that it contains 5 blocks, consisting of 13 convolutional layers. The convolutional filters have a width of 3. The sizes under the blocks are input dimensions. Global Average Pooling (GAP) is performed to obtain 512 features coming from both sides, which are concatenated and run through two FC-4096 layers.
+EM3, in contrast to EM1 and EM2, uses convolutional layers for processing input grasp trajectories. The trajectory sub-network is similar to VGG-16 in that it contains 5 blocks, comprising 13 convolutional layers. The convolutional filters have a width of 3. The sizes under the blocks are input dimensions. Global Average Pooling (GAP) is performed to obtain 512 features coming from both sides, which are concatenated and run through two FC-4096 layers.
 
 All models were trained and tested on simulated data. EM2 and EM3 were tested on the real robot setup. 
 
