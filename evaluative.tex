@@ -61,19 +61,19 @@ The individual models are now introduced below. Only their unique properties are
 \centering
 % \begin{center}
 \subfloat[Evaluative Model 1]{%
-  \includegraphics[width=0.9\textwidth]{images/networkArchitecture.pdf}
+  \includegraphics[width=0.75\textwidth]{images/networkArchitecture.pdf}
 }
 % \end{center}
 
 % \begin{center}
 \subfloat[Evaluative Model 2]{%
-    \includegraphics[width=0.8\textwidth]{images/ResNet.pdf}
+    \includegraphics[width=0.66\textwidth]{images/ResNet.pdf}
 }
 % \end{center}
 
 % \begin{center}
 \subfloat[Evaluative Model 3]{%
-    \includegraphics[width=0.8\textwidth]{images/Chaonet_newpic.pdf}
+    \includegraphics[width=0.66\textwidth]{images/Chaonet_newpic.pdf}
 }
 % \end{center}
 
@@ -104,6 +104,36 @@ This model, as for EM1 (Figure~\ref{fig:networkArchitecture2} (c)), uses VGG-16 
 EM3, in contrast to EM1 and EM2, uses convolutional layers for processing input grasp trajectories. The trajectory sub-network is similar to VGG-16 in that it contains 5 blocks, comprising 13 convolutional layers. The convolutional filters have a width of 3. The sizes under the blocks are input dimensions. Global Average Pooling (GAP) is performed to obtain 512 features coming from both sides, which are concatenated and run through two FC-4096 layers.
 
 All models were trained and tested on simulated data. EM2 and EM3 were tested on the real robot setup. 
+
+\begin{table*}[t]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+Variant \# & \multicolumn{2}{|c|}{Selected grasp} &  Succ \% & Fails as \% & Test set & \multicolumn{5}{|c|}{Prediction Performance} \\ \cline{2-3} \cline{7-11}
+ & Succs & Fails &  & of V1 fails & / GM & TP & FP & TN & FN & Accuracy \\ \hline
+V1 & 1070   & 469 & 69.53\% & 100\% & GM1 & - & - & - & - & - \\ \hline
+V2 &  781   & 207 & 79.05\% & 68.7\% & GM2 & - & - & - & - & - \\ \hline
+V3 & 1352 & 187 & 87.85\% & 39.9\% & GM1 & 37840 &	12226 & 39211 & 10244 & 77.42\% \\ \hline
+V4 &  1361 & 178 & 88.43\% & 38.0\% & GM1 & 40234 &	14475 & 36962 & 7850 & 77.57\% \\ \hline
+
+V5 & 1361 & 178 & 88.43\% & 38.0\%& GM1 & 39603 & 14122 &37315 & 8481	& 77.29\% \\ \hline
+
+V6 & 1375 & 164 & 89.34\% & 35.0\% & GM1 & 37584 &	11514 & 39923 &10500	& 77.88\% \\ \hline
+V7 & 1363 & 176 & 88.56\% & 37.5\% & GM1 & 39332 &	12020 & 39417 & 8752 & 79.13\% \\ \hline
+V8 & 1378 & 161 & 89.54\% & 34.3\% & GM1 & 37832 &	11361 & 40076	& 10252 & 78.28\% \\ \hline
+V9 & 887 & 101 & 89.78\% & 33.5\% & GM2 & 61866 &	11454& 38847& 11970 & 81.13\% \\ \hline
+V10 & 893 & 95 & 90.38\% & 31.6\% & GM2 & 64309 &	12517 & 37784 & 9527 & 82.24\% \\ \hline
+V11 & 894 & 94 & 90.49\% & 31.2\% & GM2 & 61611 & 9792 & 40509 & 12225 & 82.26\% \\ \hline
+V12 & 1319 & 220 & 85.71\% & 47.0\% & GM1 & - & - & - & - & - \\ \hline
+V13 & 1375 & 164 & 89.34\% & 35.0\% & GM1 & - & - & - & - & - \\ \hline
+V14 & 1366 & 173 & 88.76\% & 37.0\% & GM1 & - & - & - & - & - \\ \hline
+V15 & 1153 & 386 & 74.92\% & 82.0\% & GM1 & - & - & - & - & - \\ \hline
+V16 & 1377 & 162 & 89.47\% & 35.0\% & GM1 & - & - & - & - & - \\ \hline
+V17 & 1163 & 376 & 75.57\% & 80.0\% & GM1 & - & - & - & - & - \\ \hline
+\end{tabular}
+\caption{Simulation results for all variants tested.}
+\label{table:Results-sim}
+\end{table*}
 
 \subsection{EM training methodology}
 Variants V3-V5 were trained using DS1-Tr \footnote{10\% of DS1-Tr failure cases are sampled from the grasps that collide with the table, and we preserved the colliding grasps in DS1-V. This was done to ensure EMs do not propose such grasps in real robot experiments.}. Variants V6-V17 were trained using the combined data set from DS1-Tr and DS2-Tr \footnote{The grasps that collide with the table were removed from DS2. Filtering became unnecessary since the overall quality of grasps by GM2 is better.}. The Gradient Descent(GD) optimiser was employed with starting learning rate of 0.01, a dropout rate of 0.5, and early stopping. We halve the learning rate every 5 epochs during training.
