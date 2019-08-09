@@ -21,15 +21,15 @@ V2  & 40 & 81.6\% & V11 & 43  & 87.8\% \\
 
 \begin{figure}[t]
 \begin{center}
-\includegraphics[width=\columnwidth]{plots/A6fA10s_vertical.png}
+\includegraphics[width=0.9\columnwidth]{plots/A6fA10s_vertical.png}
 \caption{V2 vs V11. This shows grasps from methods based on generative model GM2. The V2 grasps are shown in columns 1-2. The corresponding V11 grasps are shown in columns 3-4. These are the cases where V2 failed and V11 succeeded. \label{fig:v2fv11s}}
 \end{center}
 \end{figure}
 
 \begin{figure}[t]
 \begin{center}
-\includegraphics[width=\columnwidth]{plots/A6fA10f_vertical.png}\\
-\includegraphics[width=\columnwidth]{plots/A6sA10f_vertical.png}
+\includegraphics[width=0.9\columnwidth]{plots/A6fA10f_vertical.png}\\
+\includegraphics[width=0.9\columnwidth]{plots/A6sA10f_vertical.png}
 \caption{V2 vs V11. This shows grasps from methods based on generative model GM2. The V2 grasps are shown in columns 1-2. The corresponding V11 grasps are shown in columns 3-4. The top row shows the case where both failed. The bottom row shows the case where V2 succeeded and V11 failed. \label{fig:v2fsv11f}}
 \end{center}
 \end{figure}
@@ -41,7 +41,7 @@ We employed the same real objects as described in \cite{kopicki2019ijrr}. This u
 
 Using this data-set, all algorithms were evaluated on the real-robot using a paired trials methodology. Each was presented with the same object-pose combinations. Each variant generated a ranked list of grasps, and the highest ranked grasp was executed. The highest-ranked grasp based on the predicted success probability of an evaluative network is performed on each scene. A grasp was deemed successful if, when lifted for five seconds, the object then remained stable in the hand for a further five seconds. 
 
-The results are shown in Table~\ref{tab:robot-results}. In each case, the generative-evaluative variant outperforms the equivalent pure GM variant. So that V4 outperforms V1 by 75.5\% grasp success rate to 57.1\% and V11 outperforms V2 87.8\% to 81.6\%. The differences between V11:V1 and V2:V1 are highly statistically significant ($p<0.01$). Thus, we have strong support for our main hypothesis, which is that a Generative-Evaluative architecture outperforms a pure generative model.
+The results are shown in Table~\ref{tab:robot-results}. In each case, the generative-evaluative variant outperforms the equivalent pure GM variant. So that V4 outperforms V1 by 75.5\% grasp success rate to 57.1\% and V11 outperforms V2 87.8\% to 81.6\%. The differences between V11:V1 and V2:V1 are highly statistically significant ($p<0.01$) using McNemar's test. Thus, we have strong support for our main hypothesis, which is that a Generative-Evaluative architecture outperforms a pure generative model. Six of the available grasp types were deployed (pinch support, pinch, pinchbottom, rimside, rim and power edge), showing that a variety of grasps is utilised.
 %The success rate for GM1 was 57.1\% and for the top-performing method based on GM1, GEA.1, it was 77.6\% (Table~\ref{tab:robot-results}). The success rate of the second baseline, GM2, is 81.6\%, while GEA.3 shows outperforms it with a success rate of 87.8\%. A two-tailed McNemar test, for the difference between success rates for paired comparison data, was performed. The difference between the two algorithms has a $p$-value of 0.0442, and so is statistically significant. A selection of grasps where the two methods performed differently are shown in Figure~\ref{fig:successfail}.
 
 % OLD TABLE
@@ -75,8 +75,8 @@ The results are shown in Table~\ref{tab:robot-results}. In each case, the genera
 
 \begin{figure*}
 \begin{center}
-\includegraphics[width=0.5\textwidth]{plots/A2fA9s_1_vertical.png}~
-\includegraphics[width=0.5\textwidth]{plots/A2fA9s_2_vertical.png}
+\includegraphics[width=0.45\textwidth]{plots/A2fA9s_1_vertical.png}~
+\includegraphics[width=0.45\textwidth]{plots/A2fA9s_2_vertical.png}
 \caption{V1 vs V4. This shows grasps from methods based on generative model GM1. The V1 grasps are shown in columns 1-2 and 5-6. The corresponding V4 grasps are in columns 3-4 and 7-8. These are the cases where V1 failed and V4 succeeded.\label{fig:v1fv4s}}
 \end{center}
 \end{figure*}
@@ -84,8 +84,8 @@ The results are shown in Table~\ref{tab:robot-results}. In each case, the genera
 
 \begin{figure*}
 \begin{center}
-\includegraphics[width=0.5\textwidth]{plots/A2fA9f_vertical.png}~
-\includegraphics[width=0.5\textwidth]{plots/A2sA9f_vertical.png}
+\includegraphics[width=0.45\textwidth]{plots/A2fA9f_vertical.png}~
+\includegraphics[width=0.45\textwidth]{plots/A2sA9f_vertical.png}
 \caption{V1 vs V4. This shows grasps from methods based on generative model GM1. The V1 grasps are shown in columns 1-2 and 5-6. The corresponding V4 grasps are shown in columns 3-4 and 7-8. The left hand panel shows the cases where both V1 and V4 failed. The right hand panel shows the cases where V1 succeeded and V4 failed. \label{fig:v1fsv4f}}
 \end{center}
 \end{figure*}
