@@ -18,20 +18,15 @@
 
 \documentclass{ws-ijhr}
 
-
-% correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 
 \usepackage{graphicx}
-\usepackage[space]{grffile}
 \usepackage{multicol}
 \usepackage{multirow}
 \usepackage[bookmarks=true]{hyperref}
 \usepackage{amssymb,amsmath}
-\pdfminorversion=7
 \usepackage{subfig}
 \usepackage{bbding}
-\usepackage{comment}
 
 \newcommand{\eq}{Eq.~}
 \newcommand{\fig}{Fig.~}
@@ -54,7 +49,7 @@
 
 \begin{document}
 
-\markboth{Umit Rusen Aktas$^{1}$, Chao Zhao$^{1}$, Marek Kopicki$^{1}$, Ales Leonardis$^{1}$ and Jeremy L. Wyatt$^{1}$}{Deep Dexterous Grasping of Novel Objects from a Single View}
+\markboth{Insert Authors' Names here}{Insert Paper's Title here}
 
 %%%%%%%%%%%%%%%%%%%%% Publisher's Area please ignore %%%%%%%%%%%%%%%
 %
@@ -62,44 +57,27 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Deep Dexterous Grasping of Novel Objects from a Single View}
+\title{INSTRUCTIONS FOR TYPESETTING MANUSCRIPTS\\
+USING COMPUTER SOFTWARE\footnote{For the title, try not to 
+use more than 3 lines. Typeset the title in 10~pt 
+Times roman, uppercase and boldface.} }
 
-\author{UMIT RUSEN AKTAS}
+\author{FIRST AUTHOR\footnote{Typeset names in 8~pt roman,
+uppercase. Use the footnote to indicate the 
+present or permanent address of the author.}}
 
 \address{University Department, University Name, Address\\
 City, State ZIP/Zone,
 Country\footnote{State completely without abbreviations, the
 affiliation and mailing address, including country. Typeset in 8~pt
 Times italic.}\\
-rusenaktas@gmail.com}
+first\_author@university.edu}
 
-\author{CHAO ZHAO}
-
-\address{Group, Laboratory, Address\\
-City, State ZIP/Zone, Country\\
-second\_author@group.com}
-
-\author{MAREK KOPICKI}
+\author{SECOND AUTHOR}
 
 \address{Group, Laboratory, Address\\
 City, State ZIP/Zone, Country\\
 second\_author@group.com}
-
-\author{ALES LEONARDIS}
-
-\address{Group, Laboratory, Address\\
-City, State ZIP/Zone, Country\\
-second\_author@group.com}
-
-\author{JEREMY L. WYATT}
-
-\address{Group, Laboratory, Address\\
-City, State ZIP/Zone, Country\\
-second\_author@group.com}
-
-\thanks{*This work was primarily supported by FP7-ICT-600918}% <-this % stops a space
-\thanks{$^{1}$ University of Birmingham, School of Computer Science, UK.
-        {\tt\small jeremy.l.wyatt@gmail.com}}%
 
 \maketitle
 
@@ -110,21 +88,13 @@ second\_author@group.com}
 %\comby{(xxxxxxxxxx)}
 \end{history}
 
-% As a general rule, do not put math, special symbols or citations
-% in the abstract or keywords.
 \begin{abstract}
 \input{abstract}
 \end{abstract}
 
-% Note that keywords are not normally used for peerreview papers.
-\keywords{Deep learning, generative-evaluative learning, grasping.}
+\keywords{Deep learning; generative-evaluative learning; grasping.}
 
 \section{Introduction}
-% * <jeremy.l.wyatt@gmail.com> 2018-01-29T09:05:33.799Z:
-% 
-% Dexterous grasping of novel objects. Learning from demonstration. Data efficiency and grasp transfer. Problem of not knowing whether a grasp is likely to succeed or fail. Note that deep grasping methods predict success from global information, but that they require numbers of training examples infeasible for current dexterous hands. Summarise technical contributions. Summarise overall architecture.
-% 
-% ^.
 
 \input{introduction}
 
@@ -132,44 +102,28 @@ second\_author@group.com}
 
 \input{related}
 
-% \section{The Evaluative Model} \label{section:learning}
-
-% \input{learning}
-
-
-
 \section{The Simulated Grasp Data Set}
 \label{section:simulation}
 \input{simulation}
 
 \section{The Generative Evaluative Architecture} \label{section:evaluative}
 %In this section we describe how the evaluative models are trained and how we perform gradient descent and stochastic simulated annealing to attempt to improve grasps using the evaluative model.
-%\input{evaluative.tex}
+\input{evaluative.tex}
+
 
 \section{Simulation Analysis}
 \label{section:simulationAnalysis}
 \input{simulationanalysis}
 
-\section{Real robot experiment}
-\label{section:experiments}
-\input{experiments}
+\section{Extended Simulation Analysis}
+\label{section:extendedSimulationAnalysis}
+\input{extendedanalysis}
 
-\section{Conclusion} 
-\label{sec:conclusion}
-\input{conclusion}
+\section*{Acknowledgements}
 
+The authors gratefully acknowledge funding from the European Commission Funded project, PaCMan FP7-IST-600918.
 
-
-\appendix  % for no appendix heading
-% do not use \section anymore after \appendix, only \section*
-% is possibly needed
-
-% use appendices with more than one appendix
-% then use \section to start each appendix
-% you must declare a \section before using any
-% \subsection or using \label (\appendices by itself
-% starts a section numbered zero.)
-%
+\appendix
 
 \section{Data Efficient Learning of a Generative Grasp Model from Demonstration}
 
@@ -181,13 +135,7 @@ second\_author@group.com}
 %Describe, in new words, the method from IJRR.
 \input{generative_improved} \label{section:generative_new}
 
-\begin{comment}
-
 \section*{References}
-\bibliographystyle{IEEEtran}
-\bibliography{new_total}
-
-\begin{comment}
 
 %%PLS. NOTE TEMPLATE HERE SHOWN FOR DIFFERENT STYLES FOR 
 %%TEXT IN JOURNALS, BOOKS, REVIEW VOLUME AND PROCS. ETC.
@@ -246,69 +194,6 @@ motion of humanoid robots from human motion capture data, in
 
 %FIRST AUTHOR
 %\vspace*{13pt}
-\noindent%
-\parbox{5truein}{
-\begin{minipage}[b]{1truein}
-\centerline{{\psfig{file=author1.eps,width=1in,height=1.25in}}}
-\end{minipage}
-\hfill         %to 2nd column
-\begin{minipage}[b]{3.85truein}
-{{\bf First-Author} received his/her M.S. and Ph.D. degrees from the\break 
-University of Name, in Year1 and Year2, respectively. From Year3
-to Year4, he/she was Researcher/Engineer/$\ldots$ at the\break
-Institute of Name, and worked on the project of Title. 
-From Year5, he/she was Associate Professor, and became full 
-Professor in Year6 at the University of Name. Now, he/she holds 
-Position at the Faculty of XXX of the University of Name. He/she\hfilneg}
-\end{minipage} } %close for parbox
-
-\vspace*{3.9pt}  
-\noindent
-is also the President/Director of Organization/Society.
-
-\hglue 15pt First-Author is the author of over X technical 
-publications, proceedings,\break
-editorials and books. His/her research
-interests include Mind topics, Body\break
-topics and Application topics (see IJHR's flyer). 
-He/she is the coordinator of the 
-collaborative research network on Humanoid Robots at the University of 
-Name, Country. He/she is an active member of the Y Societies, 
-and was the General Chair\break
-
-\vspace*{-12.3pt}  
-\noindent
-of Z Conferences in Country, and the Co-Chair of Z Conferences in Country.
-
-%SECOND AUTHOR
-\vspace*{13pt}  
-\noindent%
-\parbox{5truein}{
-\begin{minipage}[b]{1truein}
-\centerline{{\psfig{file=author2.eps,width=1in,height=1.25in}}}
-\end{minipage}
-\hfill %to 2nd column
-\begin{minipage}[b]{3.85truein}
-{{\bf Second-Author} received his/her M.S. degree in XXX
-Engineering from the University of Name, Country, and his/her
-Ph.D. degree in XXX Engineering from the University of Name,
-Country, in Year1 and Year2, respectively. From Year3 to Year4,
-he/she was at the University of Name, as Assistant/Associate/Full\break
-Professor. He/she is currently an Assistant/Associate/Full\break
-Professor in the Department of XXX, the University of Name,\hfilneg}
-\end{minipage} } %close for parbox
-
-\vspace*{4.8pt}  
-\noindent
-Country. From Year5 to Year6, he/she also served as
-Director/Manager/$\ldots$ with\break
-the Institute/Center/$\ldots$ of Name, where he/she was responsible 
-for research\break
-projects in the area of Topics.
-
-\hglue 15pt Second-Author is the author of over X technical
-publications. His/her research interests include Mind topics, Body
-topics and Application topics (see IJHR's flyer).
 
 \vfill\eject
 
@@ -347,8 +232,6 @@ motion of humanoid robots from human motion capture data, in
 (IEEE Press, Detroit, USA, 1999), pp. 1044-1049.
 
 \end{thebibliography}
-
-\end{comment}
 
 \end{document}
 
