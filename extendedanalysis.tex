@@ -9,7 +9,7 @@ One of the interesting questions we asked is whether the grasp success probabili
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\columnwidth]{images/post-analysis/[4] V11_pred_success_vs_success.png}
+\includegraphics[width=0.8\columnwidth]{images/post-analysis/V11_pred_success_vs_success.png}
 \caption{Predicted success probability vs actual success probability for V11. The red bars indicate failures, and green bars show successes. The grasps are ordered along the horizontal axis by predicted success probabilities by EM3. The blue line shows the (actual) average success rate of grasps in every bin, while the vertical length of the shaded blue region around each point on the line correlates with the standard deviation of the success rates in nearby bins. Note that when data is missing from the graph, such as the Handle and Power Tube grasps, the noisiness of the success rate estimates increase significantly.}
 \label{fig:calibrate}
 \end{figure}
@@ -26,7 +26,7 @@ V11, which combines the generative model GM2 with the evaluative model EM3, yiel
 
 \begin{figure}
 \centering 
-\includegraphics[width=0.6\columnwidth]{images/post-analysis/[2] Grasp_type_vs_success_prob.png}
+\includegraphics[width=0.6\columnwidth]{images/post-analysis/Grasp_type_vs_success_prob.png}
 \caption{Grasp type vs. success probability.}
 \label{fig:post2}
 \end{figure}
@@ -37,7 +37,7 @@ Figure~\ref{fig:post6} compares 3 different rankings (random, V2, V11), and plot
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\columnwidth]{images/post-analysis/[6] Grasp_type_distributions_all.png}
+\includegraphics[width=0.8\columnwidth]{images/post-analysis/Grasp_type_distributions_all.png}
 \caption{Comparison of grasp type distributions per ranking of random ranking,V2 and V11.}
 \label{fig:post6}
 \end{figure}
@@ -52,46 +52,45 @@ Figure~\ref{fig:post6} compares 3 different rankings (random, V2, V11), and plot
 \subsubsection{Does EM3 rank grasps within a grasp type?}
 \noindent
 
-The second question we asked was whether EM3 is learning to rank grasps in each grasp type according to the visual input. 
-
+The second hypothesis we had was that EM3 is learning to rank grasps in each grasp type according to the visual input. In order to test this hypothesis, we compared three different ranking strategies, same as above: random, V2, V11. 
 \begin{figure}
 \centering
-\includegraphics[width=0.999\columnwidth]{images/post-analysis/[5] Ranking_quality_mean_AUC.png}
+\includegraphics[width=0.999\columnwidth]{images/post-analysis/Ranking_quality_mean_AUC.png}
 \caption{Grasp ranking quality comparison of random ranking, V2 and V11.}
 \label{fig:post5}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\columnwidth]{images/post-analysis/[7] Average_success_rate_in_scenes_based_on_top_grasp_success.png}
+\includegraphics[width=0.8\columnwidth]{images/post-analysis/Average_success_rate_in_scenes_based_on_top_grasp_success.png}
 \caption{Average success rate in scenes vs top grasp success.}
 \label{fig:post7}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\columnwidth]{images/post-analysis/[8] V11_success_prediction_for_top-ranked_grasp.png}
+\includegraphics[width=0.8\columnwidth]{images/post-analysis/V11_success_prediction_for_top-ranked_grasp.png}
 \caption{Histogram of success rate of a top-ranked grasp vs its probability of success as estimated by V11.}
 \label{fig:post8}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\columnwidth]{images/post-analysis/[10] number_of_generated_grasps_vs_success_rate.png}
+\includegraphics[width=0.8\columnwidth]{images/post-analysis/number_of_generated_grasps_vs_success_rate.png}
 \caption{Correlation of success rate with number of generated grasps per scene per grasp type.}
 \label{fig:post10}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\columnwidth]{images/post-analysis/[12] mean_success_rate_per_grasp_type_and_object_class.png}
+\includegraphics[width=0.8\columnwidth]{images/post-analysis/mean_success_rate_per_grasp_type_and_object_class.png}
 \caption{Mean success rate per grasp type and object class.}
 \label{fig:post12}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\columnwidth]{images/post-analysis/[13] mean_number_of_generated_grasps_per_grasp_type_and_object_class.png}
+\includegraphics[width=0.8\columnwidth]{images/post-analysis/mean_number_of_generated_grasps_per_grasp_type_and_object_class.png}
 \caption{Mean number of generated grasps per grasp type and object class.}
 \label{fig:post13}
 \end{figure}
