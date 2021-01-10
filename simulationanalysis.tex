@@ -16,6 +16,20 @@ The main findings are as follows. First, of the pure generative models GM2 outpe
 
 The results above use GM1 as the generative model. We can measure the benefit of substituting this by GM2. This yields a further reduction in residual failures over GM1 under the same conditions (training with DS1-Tr and DS2-Tr) of 3.5\%.
 
+\begin{figure}[t]
+\centering
+\subfloat[GM1 Ranking Comparison]{%
+  \includegraphics[width=0.45\columnwidth]{images/svr_gm1.pdf}
+}
+
+\subfloat[GM2 Ranking Comparison]{%
+  \includegraphics[width=0.45\columnwidth]{images/svr_gm2.pdf}
+}
+  \caption{Grasp success probability (in simulation) vs. grasp ranking. (a) GM1 vs. V4 vs. optimal ranking (empirical limit). (b) GM2 vs. V11 vs. optimal.}
+  \label{fig:successvsranking}
+\end{figure}
+
+
 For both the gradient and simulated-annealing based optimisations, while the predicted probability of success according to the EM rises, the actual success rate in simulation declines for all variants V12-V17. We observed that wrist position changes have a greater negative impact than finger joint. The results suggest that optimising dexterous grasps by the EM is non-trivial. It should be noted that the performance of the gradient ascent was much better than the simulated annealing.
 
 It is instructive to understand the effect of re-ranking with the EM by referring to Figure~\ref{fig:successvsranking}. This shows the average grasp success probability (across the test set) in simulation against the grasp rank. We observed that the evaluative models are much more effective than the generative models at correctly ranking the grasps. The optimal ranking is also shown. It can be seen that the GEA architectures remove more than half the residual grasp failures by re-ranking so that a good grasp is the first ranked grasp.
@@ -40,19 +54,6 @@ In summary, simulation results provide evidence that: (i) pure GM2 outperforms G
 % In this context, precision is the fraction of correctly labeled grasps among those predicted to be of a certain class (success or failure). Recall stands for the fraction of relevant grasps that have been identified correctly among all grasps that belong to that class. The results show a high recall rate for successful grasps, and there are relatively more false positives than false negatives. This necessitates pairing our evaluative neural network with a generative model rather than a random grasp generator, which would likely result in very low quality grasps and consequently, more false positives. 
 
 %To test our generative-evaluative learning architecture we compared the grasp it proposes to the grasp proposed by the generative learner alone. Since \citet{kopicki2015ijrr} showed a 77.7\% success rate with the original generative algorithm we generated a new test set that contained both more challenging objects and placed them in challenging poses. The difficulty single-view grasping with a depth camera depends greatly on the pose of the object relative to the camera. The set comprised 40 test objects (Figure~\ref{fig:real-objects}) and another six training objects. The training objects were used by the human to demonstrate ten example grasps (Figure~\ref{fig:generative-training}). The 40 test objects were used to generate 49 object-pose pairs. From the 40 objects, 35 belonged to object classes in the simulation dataset, while the remaining five do not. 
-
-\begin{figure}[t]
-\centering
-\subfloat[GM1 Ranking Comparison]{%
-  \includegraphics[width=0.9\columnwidth]{images/svr_gm1.pdf}
-}
-
-\subfloat[GM2 Ranking Comparison]{%
-  \includegraphics[width=0.9\columnwidth]{images/svr_gm2.pdf}
-}
-  \caption{Grasp success probability (in simulation) vs. grasp ranking. (a) GM1 vs. V4 vs. optimal ranking (empirical limit). (b) GM2 vs. V11 vs. optimal.}
-  \label{fig:successvsranking}
-\end{figure}
 
 
 %We compared the EM and GM rankings (Figure~\ref{fig:successvsranking}). The x-axis shows the ranking. The y-axis shows the average actual success rate over all scenes (1,241 test, 7,311 training). When ranked by the EM, the grasp success probability falls nearly monotonically, as is desirable. On the other hand, the likelihood-based ranking of GM results in many good grasps being low-ranked. We also wish to know whether the grasps recommended by the EM and the GM have different grasp success rates. The success rates of the top-ranked grasps are 71.59\% (GM) and  84.2\% (EM).
