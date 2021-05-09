@@ -391,13 +391,6 @@ V.~Dumoulin, E.~Perez, N.~Schucher, F.~Strub, H.~de~Vries, A.~Courville, and
   Y.~Bengio, ``Feature-wise transformations,'' \emph{Distill}, 2018,
   https://distill.pub/2018/feature-wise-transformations.
 
-\bibitem{frey2007clustering}
-\BIBentryALTinterwordspacing
-B.~J. Frey and D.~Dueck, ``Clustering by passing messages between data
-  points,'' \emph{Science}, vol. 315, no. 5814, pp. 972--976, 2007. [Online].
-  Available: \url{https://doi.org/10.1126/science.1136800}
-\BIBentrySTDinterwordspacing
-
 \bibitem{kopicki2019}
 M.~Kopicki, D.~Belter, and J.~L. Wyatt, ``Learning better generative models for
   dexterous, single-view grasping of novel objects,'' 2019.
