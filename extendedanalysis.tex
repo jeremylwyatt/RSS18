@@ -5,10 +5,10 @@ In this section, we perform a deep dive into the results of V11, specifically th
 \subsection{Success rates of grasp types}
 \noindent
 
-\begin{figure}
+\begin{figure}[h]
 \centering 
 \includegraphics[width=0.5\columnwidth]{images/post-analysis/Grasp_type_vs_success_prob.png}
-\caption{Grasp type vs. success probability.}
+\caption{Grasp type vs. actual success rate.}
 \label{fig:post2}
 \end{figure}
 
@@ -19,7 +19,7 @@ Not all grasps are created equal. On average, some grasp types are more successf
 
 An interesting question is whether the grasp success probabilities EM3 yields are \textit{calibrated}, i.e. whether they correlate with actual grasp success rates. Calibrated classifiers are desirable, because they are useful in making decisions by incorporating the uncertainty of predictions into account. Figure~\ref{fig:calibrate}(All) plots a histogram of successful and unsuccessful grasps, ordered by their predicted grasp success probabilities. As the blue line shows, the actual grasp success rate in each bin increases near-linearly with the predicted probability. For many grasp types, including Pinch Bottom, Power Cube, Rim, and Power Edge, the grasp success probabilities EM3 yields appear to be correlated with the actual success rates of grasps. This suggests that V11 performance in the real robot experiments could be further improved by employing multiple views of the same object until a grasp is found where the network is highly confident that the grasp will succeed. Applying such an algorithm is beyond the scope of this paper, where the restrictions limits us to one view per object to generate grasps.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=1.02\columnwidth]{images/post-analysis/V11_pred_success_vs_success.png}
 \caption{Predicted success probability vs actual success probability for V11. The red bars indicate failures, and green bars show successes. The grasps are ordered along the horizontal axis by predicted success probabilities by EM3. The blue line shows the (actual) average success rate of grasps in every bin, while the vertical length of the shaded blue region around each point on the line correlates with the standard deviation of the success rates in nearby bins. Note that when there are not enough grasps to estimate rates, as is the case for Handle and Power Tube grasps, the uncertainty of the estimates increase significantly.}
@@ -29,9 +29,9 @@ An interesting question is whether the grasp success probabilities EM3 yields ar
 \subsection{Why is re-ranking with an evaluative model improving the performance?}
 \noindent
 
-V11, which combines the generative model GM2 with the evaluative model EM3, yields a substantial improvement over GM2's ranking, improving GM2's simulation top-grasp success rate from 79.05\% to 90.49\%, and real-world performance from 81.6\% to 87.8\%. We hypothesise that two main factors could contribute to this result. First, EM3 could be assigning high predicted success probabilities to grasp types that are generally successful, and low probabilities to those grasp types that fail often. Effectively, this would mean that a ranking based on EM3's predicted probabilities would simply be favouring grasp types that are, on average, more successful than others. Second, within each grasp type, EM3 may be learning which approach trajectories and hand/finger positions are more likely to be successful with respect to the object. The second factor, if true, is more interesting. Such evidence would imply that the network is learning to associate the object's geometry with the approach trajectory and configuration. Below, we look for evidence to support both hypotheses.
+V11, which combines the generative model GM2 with the evaluative model EM3, yields a substantial improvement over GM2's ranking, improving GM2's simulation top-grasp success rate from 79.05\% to 90.49\%, and real-world performance from 81.6\% to 87.8\%. We hypothesise that two main factors could contribute to this result. First, EM3 could be assigning high predicted success probabilities to grasp types that are generally successful, and low probabilities to those grasp types that fail often. Effectively, this would mean that a ranking based on EM3's predicted probabilities would simply be favouring grasp types that are, on average, more successful than others. Second, within each grasp type, EM3 may be learning which approach trajectories and hand/finger positions are more likely to be successful with respect to the object. The second hypothesis is more interesting. Such evidence would imply that the network is learning to associate the object's geometry with the approach trajectory and configuration. Below, we look for evidence to support both factors.
 
-\subsubsection{How does an evaluative model rank grasp types?}
+\subsubsection{Does the evaluate model learn to rank grasp types?}
 \noindent
 
 %\begin{figure}
@@ -41,6 +41,7 @@ V11, which combines the generative model GM2 with the evaluative model EM3, yiel
 %\label{fig:post6}
 %\end{figure}
 
+\begin{comment}
 \begin{table}[h]
 \small
 \centering
@@ -61,10 +62,18 @@ Power Handle & $\mathbf{121.0} \pm 95.7$  & $\mathbf{216.1} \pm 106.3 [\mathbf{+
 \caption{Changes in average grasp position per grasp type according to Random, V2 and V11 rankings.}
 \label{table:rankingchanges}
 \end{table}
+\end{comment}
+
+\begin{figure*}[h]
+\begin{center}
+\includegraphics[width=0.35\textwidth]{images/post-analysis/V2_suc_rate_vs_improvement.png}~
+\includegraphics[width=0.35\textwidth]{images/post-analysis/V11_suc_rate_vs_improvement.png}
+\caption{Comparing the per-grasp type average ranking improvement of V2 and V11, with random ranking taken as reference. Average ranking improvement is the average shift (\%) of all examples of a grasp type in a scene, aggregated across all test scenes where that grasp type is present. While both V2 and V11 appear to favour more robust grasps over those that fail often, V11's ranking appears to correlate better with actual success rate of each grasp type. For reference, V11's improvement rates and actual grasp success rates yield a Pearson coefficient of 0.94, while V2 only achieves 0.69. \label{fig:v2_vs_v11_rates}}
+\end{center}
+\end{figure*}
 
 
-Figure~\ref{fig:post6} compares 3 different rankings (random, V2, V11), and plots the distribution of grasp types for each position in all rankings. The random ranking which are based on randomly assigned success probabilities, predictably, uniformly places all grasps at all positions, regardless of their type. V2, which is based on the grasp success likelihoods generated by GM2, favours successful grasp types such as Rim variations over unsuccessful ones such as Handle grasps. V11, based on the evaluative model EM3, acts similarly to V2. Interestingly, V2 and V11 appear to have similar ranking patterns, despite calculating the grasp success probabilities in entirely different ways. 
-
+Figure~\ref{fig:v2_vs_v11_rates} compares the per-grasp type average ranking improvement of V2, which is based on the generative model GM2, and V11, which employs evaluative model EM3. Both are calculated by taking the random ranking, which are based on randomly assigned success probabilities, as reference. Both V2 and V11 appear to favour robust grasps over that fail more often, despite calculating the grasp success probabilities in entirely different ways. The Pearson correlation coefficient between V11's average improvement rates and actual success rates is 0.94, while V2's coefficient is only 0.69. While a causal link is yet to be established, V11 ranking's strong correlation with per-grasp-type success rates suggests V11 (therefore EM3) learns to rank grasps according to their grasp types.
 
 %\begin{figure}
 %\centering
@@ -78,7 +87,7 @@ Figure~\ref{fig:post6} compares 3 different rankings (random, V2, V11), and plot
 
 The second hypothesis we have is that EM3 is learning to rank grasps within each grasp type, favouring grasp trajectories that are more likely to be successful over others. In order to test this hypothesis, we compared three different strategies above: random, V2, V11. In Figure~\ref{fig:post5}, we compare the the quality of the ranking of grasps within each grasp type. In order to compare rankings, a grasp's ranking, multiplied by -1, is used as the classification score in a binary classification problem (failure/success). The metric used to compare different models is the area under Receiver Operating Characteristics (ROC) curve. This metric is calculated for each scene, and averaged across all scenes in the test set. The left-most plot in Figure~\ref{fig:post5} shows that the overall ranking quality of V11 is better than V2 and random predictions across grasp types. Furthermore, V11 has the best overall within-type ranking for all grasp types except for Power Tube. This observation suggests that V11 not only leans on the grasp type information, but also learns to associate the object's geometry with the grasp trajectories to determine whether a grasp will be successful.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.999\columnwidth]{images/post-analysis/Ranking_quality_mean_AUC.png}
 \caption{Within-type grasp ranking quality comparison of random, V2 and V11 predictions according to the Area-Under-Curve of Receiver Operating Characteristics (AUC-ROC) metric. Higher score is better. V11's ranking outperforms those of random and V2, except for Power Tube.}
