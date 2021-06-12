@@ -49,44 +49,40 @@ This procedure both provides meaningful depth features to the network, and makes
 
 The grasp parameter data $h_t$ consists of 10 trajectory waypoints represented by $27 \times 10 = 270$ floating point numbers, and 10 extra numbers reserved for the grasp type. Each of the 10 training grasps is treated as a different class, and $h_t$ uses the 1-of-N encoding system. Based on the grasp type ([1-10]), the corresponding entry is set to 1, while the rest remain 0. The grasp parameters are converted to the coordinate system of the camera which was used to obtain the corresponding depth image. In EM1 and EM2, the parameters are processed with a fully-connected (FC-1024) layer, and the output is \textit{element-wise added} to the visual features, while EM3 uses a convolutional approach. In all networks, the joint visual features and grasp parameter data are joined in higher layers.
 
-All FC layers have RELU activation functions, except for the output layer, which uses 2-way softmax in all EM variants. The output layer has two nodes, corresponding to the success and failure probabilities of the grasp. A cross-entropy loss is used to train the neural network, as given in \eq\ref{equation:crossentropy}.
-
-\begin{equation}
-H_{y'}(y) := - \sum_{i} ({y_i' \log(y_i) + (1-y_i') \log (1-y_i)})
-\label{equation:crossentropy}
-\end{equation}
-where $y_i'$ is the class label of the grasp, which is either 1 (success) or 0 (failure), and $y_i = f(I_i, h_i)$ is is the predicted label of the grasp pair ($I_i$, $h_i)$.
-
-The individual models are now introduced below. Only their unique properties are highlighted.
+All FC layers have RELU activation functions, except for the output layer, which uses 2-way softmax in all EM variants. The output layer has two nodes, corresponding to the success and failure probabilities of the grasp. A cross-entropy loss is used. % to train the neural network, as given in \eq\ref{equation:crossentropy}.
+%\begin{equation}
+%H_{y'}(y) := - \sum_{i} ({y_i' \log(y_i) + (1-y_i') \log (1-y_i)})
+%\label{equation:crossentropy}
+%\end{equation}
+%where $y_i'$ is the class label of the grasp, which is either 1 (success) or 0 (failure), and $y_i = f(I_i, h_i)$ is is the predicted label of the grasp pair ($I_i$, $h_i)$.
+The individual models are introduced below. Only their unique properties are highlighted.
 
 \begin{figure*}[th!]
 \centering
 % \begin{center}
 \subfloat[Evaluative Model 1]{%
-  \includegraphics[width=1.0\textwidth]{images/networkArchitecture.pdf}
+  \includegraphics[width=0.9\textwidth]{images/networkArchitecture.pdf}
 }
 % \end{center}
 
 % \begin{center}
 \subfloat[Evaluative Model 2]{%
-    \includegraphics[width=1.0\textwidth]{images/ResNet.pdf}
+    \includegraphics[width=0.9\textwidth]{images/ResNet.pdf}
 }
 % \end{center}
 
 % \begin{center}
 \subfloat[Evaluative Model 3]{%
-    \includegraphics[width=1.0\textwidth]{images/Chaonet_newpic.pdf}
+    \includegraphics[width=0.9\textwidth]{images/Chaonet_newpic.pdf}
 }
 % \end{center}
-\caption{The three proposed evaluative network architectures. Similar to (cite: Levine1), the two channels of information (visual data and grasp parameters) are processed in parallel and combined to reach the final decision. RELU activations are used throughout the models, except for the final softmax layers. A final softmax layer has grasp success and and failure nodes, and learns to predict the success probability of a grasp. (a) EM1, a VGG-16 based model, where the first 13 layers of VGG-16 are frozen. (b) EM2, a ResNet-50-based (cite: HeZRS15) network. First four blocks are used for feature extraction, and the rest of the network is used to learn joint features. (c) Second model based on VGG-16. In EM3, the channels are joined via concatenation, not addition.}
+\caption{The three evaluative network architectures. Two channels (visual and grasp parameters) are processed in parallel and then combined. RELU activations are used throughout, except for the final layer. (a) EM1, a VGG-16 based model, where the first 13 layers of VGG-16 are frozen. (b) EM2, a ResNet-50-based network. The first four blocks are used for feature extraction and the rest to learn joint features. (c) EM3, also based on VGG-16.}
 \label{fig:networkArchitecture2}
 \end{figure*}
 
 \subsection{Evaluative Model 1 (EM1)}
 \noindent
-Figure~\ref{fig:networkArchitecture2} (a) shows the architecture of the first proposed evaluative network. The colourised depth image is processed with the VGG-16 network \cite{Simonyan14c} to obtain the image features. We froze the first 13 layers in order to reduce overfitting.
-
-The grasp parameters and image features pass through two FC-1024 layers in order to obtain two feature vectors of length 1024. The features are combined using the element-wise addition operation, and fed into 4 FC-1024 layers. Similarly with \cite{Levine1}, we use addition, not concatenation. This follows the observation that addition yielded a marginally better performance in the experiments. Furthermore, concatenation and addition can be considered as interchangeable operations in this context \cite{dumoulin2018feature-wise}. The final FC-1024 layers form the associations between the visual features and hand parameters, and contain most of the trainable parameters in the network.
+Figure~\ref{fig:networkArchitecture2} (a) shows the architecture of the first evaluative network. The colourised depth image is processed with the VGG-16 network \cite{Simonyan14c}. The first 13 layers are frozen to reduce overfitting. Grasp parameters and image features each pass through two FC-1024 layers to obtain two feature vectors of length 1024. The features are combined using element-wise addition and fed into 4 FC-1024 layers. Concatenation and addition can be considered as interchangeable in this context \cite{dumoulin2018feature-wise}. The final FC-1024 layers form associations between visual features and hand parameters, and contain most of the trainable parameters in the network.
 
 \subsection{Evaluative Model 2 (EM2)}
 \noindent
@@ -96,15 +92,11 @@ The grasp parameters and image features pass through two FC-1024 layers in order
 % \label{fig:ResNet}
 % \end{figure}
 
-EM2 (Figure~\ref{fig:networkArchitecture2} (b)) uses the ResNet-50 architecture in order to obtain the image features. In the EM2 architecture, ResNet-50 network is broken down into two parts: the first 4 convolutional blocks are used to extract the visual features. The final block, which has 9 randomly-initialised convolutional layers, combines the image features and grasp parameters. Similarly with EM1, element-wise addition joins the two channels of information. Spatial tiling is used to convert the processed grasp parameters, a vector of size $1024$, to a matrix of size $14 \times 14 \times 1024$. Because the last block processes combined information, EM2 is designed with only 2 FC-64 layers.
+EM2 (Figure~\ref{fig:networkArchitecture2} (b)) uses the ResNet-50 architecture \cite{HeZRS15}, broken down into two parts. The first 4 convolutional blocks are used to extract the visual features. The final block, with 9 randomly-initialised convolutional layers, combines these with the grasp parameters. Similar to EM1, element-wise addition joins the two channels. The grasp parameters, a vector of size $1024$, are reshaped to a block $14 \times 14 \times 1024$. The final block processes the merged information and has 2 FC-64 layers.
 
 \subsection{Evaluative Model 3 (EM3)}
 \noindent
-This model, as for EM1 (Figure~\ref{fig:networkArchitecture2} (c)), uses VGG-16 as the visual backbone. All 16 layers of VGG-16 are trained. The hand trajectory parameters pass through a feature extraction network before being concatenated with the visual features. The combined part of the network contains two high-capacity FC-4096 layers, followed by a FC2+softmax layer.
-
-EM3, in contrast to EM1 and EM2, uses convolutional layers for processing input grasp trajectories. The trajectory sub-network is similar to VGG-16 in that it contains 5 blocks, comprising 13 convolutional layers. The convolutional filters have a width of 3. The sizes under the blocks are input dimensions. Global Average Pooling (GAP) is performed to obtain 512 features coming from both sides, which are concatenated and run through two FC-4096 layers.
-
-All models were trained and tested on simulated data. EM2 and EM3 were tested on the real robot setup. 
+This model (Figure~\ref{fig:networkArchitecture2} (c)) also uses VGG-16, but all 16 layers are tuneable. The hand trajectory parameters pass through a feature extraction network before being concatenated with the visual features. The combined part of the network contains two high-capacity FC-4096 layers, followed by a FC2+softmax layer. EM3, in contrast to EM1 and EM2, uses convolutional layers for processing input grasp trajectories. The trajectory sub-network is similar to VGG-16 in that it contains 5 blocks, comprising 13 convolutional layers. The convolutional filters have a width of 3. The sizes under the blocks are input dimensions. Global Average Pooling (GAP) is used to obtain 512 features from each side, which are concatenated and passed through two FC-4096 layers. 
 
 \begin{table*}[t]
 \centering
@@ -139,7 +131,7 @@ V17 & 1163 & 376 & 75.57\% & 80.0\% & GM1 & - & - & - & - & - \\ \hline
 
 \subsection{EM training methodology}
 \noindent
-Variants V3-V5 were trained using DS1-Tr \footnote{10\% of DS1-Tr failure cases are sampled from the grasps that collide with the table, and we preserved the colliding grasps in DS1-V. This was done to ensure EMs do not propose such grasps in real robot experiments.}. Variants V6-V17 were trained using the combined data set from DS1-Tr and DS2-Tr \footnote{The grasps that collide with the table were removed from DS2. Filtering became unnecessary since the overall quality of grasps by GM2 is better.}. The Gradient Descent(GD) optimiser was employed with starting learning rate of 0.01, a dropout rate of 0.5, and early stopping. We halve the learning rate every 5 epochs during training.
+All models were trained and tested on simulated data. EM2 and EM3 were tested on the real robot setup. Variants V3-V5 were trained using DS1-Tr \footnote{10\% of DS1-Tr failure cases are sampled from the grasps that collide with the table, and we preserved the colliding grasps in DS1-V. This was to ensure EMs do not propose such grasps in real robot experiments.}. Variants V6-V17 were trained using the combined data set from DS1-Tr and DS2-Tr \footnote{The grasps that collide with the table were removed from DS2. Filtering became unnecessary since the overall quality of grasps by GM2 is better.}. The Gradient Descent(GD) optimiser was employed with starting learning rate of 0.01, a dropout rate of 0.5, and early stopping. We halve the learning rate every 5 epochs during training.
 
 \subsection{Grasp optimisation using the EM}
 \noindent

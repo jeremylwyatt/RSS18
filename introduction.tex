@@ -6,7 +6,7 @@ This is the motivation for the problem tackled in this paper, which is planning 
 This in turn raises the question as to how we architect the learner. Grasp planning comprises two problems: generation and evaluation. Candidate grasps must first be generated according to some distribution conditioned on sensed data. Then each candidate grasp must be evaluated, so as to produce a grasp quality measure (e.g maximum resistable wrench), the probability of grasp success, the likely in-hand slip or rotation, etcetera. These measures are then used to rank grasps so as to select one to execute.
 \begin{figure}[t]
 \begin{center}
-  \includegraphics[width=\columnwidth]{images/contribution.pdf}
+  \includegraphics[width=0.7\columnwidth]{images/contribution.pdf}
   \end{center}
   \caption{The basic architecture of a generative-evaluative learner. When shown a novel object the learned generative model (GM) produces many grasps according to its likelihood model. These are then each evaluated by a learned evaluative model (EM), which predicts the probability of grasp success. The grasps are then re-ranked according to the predicted success probability and the top ranked grasp is executed.}
 \label{fig:systemArchitecture}
