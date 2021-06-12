@@ -37,13 +37,11 @@ These generative models do not, however, estimate a probability of success for t
 %The data provided to the evaluative network is collected from randomly generated scenes, therefore each scene has a different random combination of the parameters. The primary purpose of the network is to learn robust grasps across different conditions, and this is a complex task. The first challenge is that the kinematic model of the hand is unknown to the evaluative network. It only has access to the parameters that \textit{configure} the hand: the wrist and joint positions. Second, the system is weakly supervised with the grasp result (success or failure), and no further labels are provided.
 
 We tested three evaluative models. The first is based on the VGG-16 network \cite{Simonyan14c}, named Evaluative Model 1 (EM1), and shown in Figure \ref{fig:networkArchitecture2} (a). A version based on the ResNet-50 network, termed EM2, is shown in Figure \ref{fig:networkArchitecture2} (b). Finally, EM3 (Figure \ref{fig:networkArchitecture2} (c)) is also based on VGG-16. All EMs are initialised with ImageNet weights. Regardless of the type, an EM has the functional form $f(I_t, h_t)$, where $I_t$ is a colourised depth image of the object, and $h_t$ contains a series of wrist poses and joint configurations for the hand, converted to the camera's frame of reference. The network's output layer calculates a probability of success for the image-grasp pair $I_t$, $h_t$. The model processes the grasp parameters and visual information in separate channels, and combines them to feed into a feedforward pipeline that produces the output.
-
 %\begin{figure}[h]
 %  \includegraphics[width=0.9\linewidth]{images/colourDepth.pdf}
 %  \caption[Colourised depth images.]{Colourised depth images. From left to right, the objects are: coke bottle, chocolate box, hand cream, and bowl.}
 %\label{fig:colorisedDepth}
 %\end{figure}
-
 The depth image is colourised before it is passed as input to the evaluative network. This converts the 1-channel depth data to a 3-channel RGB image. We first crop the middle $460 \times 460$ section of the $640 \times 480$ depth image, and down-sample it to $224 \times 224$. Two more channels of the same dimension are added corresponding to the mean and Gaussian curvatures. %Figure~\ref{fig:colorisedDepth} contains four examples of colourised depth images. 
 This procedure both provides meaningful depth features to the network, and makes the input compatible with VGG-16 and ResNet, which require images of size $224 \times 224 \times 3$.
 
