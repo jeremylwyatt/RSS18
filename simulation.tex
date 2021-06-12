@@ -6,7 +6,7 @@ To generate the training set, a simulated depth image of a scene containing a si
 \subsection{Features and Constraints of the Virtual Environment}
 \label{subsection:environment}
 
-\begin{figure}[hp]
+\begin{figure}[t]
 \begin{center}
   \includegraphics[width=0.7\columnwidth]{images/allObjects-small.pdf}
   \end{center}
@@ -85,7 +85,7 @@ The data set is divided into units called \textit{scenes}, where each scene comp
 %After a grasp $h_i$ is generated in world coordinates, the waypoints that belong to the grasp are converted to the camera's frame of reference. 
 %The goal of our network architecture is to learn which grasps are more likely to succeed given a point cloud, where both input channels are represented in terms of the camera frame of reference. %This point differentiates us from the work of Levine et al. \cite{Levine1}, where camera coordinates are not used. It should be noted that the possible camera locations in our simulated data covers a larger space, with full circular movement $[0, 2\pi]$ on azimuth and $[30-57]$ range in elevation. Our scenes do not have any distinguishing landmarks such as a bin or robot base, which may aid the network in locating the camera in the scene. 
 
-In each scene $S_i$, a number of depth images are taken $\{I_{ik}\}_{k=0}^{20}$, in the manner explained above. The first image $I_{i0}$ is used to generate grasps, as explained in Section \ref{section:generative}. We typically perform 60-300 grasps per scene. Attaching different views to each grasp instead of the seed image $I_{i0}$ ensures there is more variation in terms of viewpoints, resulting in a richer dataset.
+In each scene $S_i$, a number of depth images are taken $\{I_{ik}\}_{k=0}^{20}$, in the manner explained above. The first image $I_{i0}$ is used to generate grasps using GM1 \cite{kopicki2015ijrr} or GM2 \cite{kopicki2019ijrr}. We typically perform 60-300 grasps per scene. Attaching different views to each grasp instead of the seed image $I_{i0}$ ensures there is more variation in terms of viewpoints, resulting in a richer dataset.
 
 Once a grasp is performed in simulation, it is considered a success if an object is lifted one metre above the table, and held there for two seconds. If the object slips from the hand during lifting or holding, the grasp is a failure. 
 
