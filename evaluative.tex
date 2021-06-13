@@ -84,21 +84,20 @@ The models are introduced below. Only their unique properties are highlighted.
 
 \subsection{Evaluative Models}
 
-\subsubsection{Evaluative Model 1 (EM1)}
+\noindent {\bf Evaluative Model 1 (EM1).}
 \noindent
 Figure~\ref{fig:networkArchitecture2} (a) shows the architecture of the first evaluative network. The colourised depth image is processed with the VGG-16 network \cite{Simonyan14c}. The first 13 layers are frozen to reduce overfitting. Grasp parameters and image features each pass through two FC-1024 layers to obtain two feature vectors of length 1024. The features are combined using element-wise addition and fed into 4 FC-1024 layers. Concatenation and addition can be considered as interchangeable in this context \cite{dumoulin2018feature-wise}. The final FC-1024 layers form associations between visual features and hand parameters, and contain most of the trainable parameters in the network.
 
-\subsubsection{Evaluative Model 2 (EM2)}
+\noindent {\bf Evaluative Model 2 (EM2).}
 \noindent
 % \begin{figure}[!ht]
 %   \includegraphics[width=\textwidth]{images/ResNet.pdf}
 %   \caption[The ResNet-based evaluative deep neural network architecture.]{The ResNet-based evaluative deep neural network architecture (EM2). Spatial tiling is used to repeat the grasp parameters before they join the image processing pathway. This network requires fewer FC layers due to the earlier marriage of information channels.}
 % \label{fig:ResNet}
 % \end{figure}
-
 EM2 (Figure~\ref{fig:networkArchitecture2} (b)) uses the ResNet-50 architecture \cite{HeZRS15}, broken down into two parts. The first 4 convolutional blocks are used to extract the visual features. The final block, with 9 randomly-initialised convolutional layers, combines these with the grasp parameters. Similar to EM1, element-wise addition joins the two channels. The grasp parameters, a vector of size $1024$, are reshaped to a block $14 \times 14 \times 1024$. The final block processes the merged information and has 2 FC-64 layers.
 
-\subsubsection{Evaluative Model 3 (EM3)}
+\noindent {\bf Evaluative Model 3 (EM3).}
 \noindent
 This model (Figure~\ref{fig:networkArchitecture2} (c)) also uses VGG-16, but all 16 layers are tuneable. The hand trajectory parameters pass through a feature extraction network before being concatenated with the visual features. The combined part of the network contains two high-capacity FC-4096 layers, followed by a FC2+softmax layer. EM3, in contrast to EM1 and EM2, uses convolutional layers for processing input grasp trajectories. The trajectory sub-network is similar to VGG-16 in that it contains 5 blocks, comprising 13 convolutional layers. The convolutional filters have a width of 3. The sizes under the blocks are input dimensions. Global Average Pooling (GAP) is used to obtain 512 features from each side, which are concatenated and passed through two FC-4096 layers. 
 
