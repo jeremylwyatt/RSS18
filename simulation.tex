@@ -100,7 +100,7 @@ In each scene $S_i$, a number of depth images are taken $\{I_{ik}\}_{k=0}^{20}$,
 \end{figure}
 
 Using this method, we generated a data set (DS1) of 1.28 million simulated grasps using GM1 as the generative model and a data set of 1.136 million additional grasps (DS2) using GM2. Each grasp in DS1-Te and DS2 can be replayed in MuJoCo and the sets are partitioned to train, validation and test sets. We give the dataset statistics in Table~\ref{tab:data}. The ratio of successful grasps in the dataset is less than 50\% for GM1, and is more than 50\% for GM2. DS1 and DS2 only contain scenes that have at least one successful grasp to have a balanced data set. During training, the datasets were balanced by under-sampling the failure cases in DS1-Tr and over-sampling the failure cases for DS2-Tr. No balancing was performed for the validation and test sets.
-\begin{table*}[htbp]
+\begin{table*}[t]
 \centering
 \caption{Statistics of the simulated data sets.}
 \label{tab:data}
