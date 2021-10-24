@@ -1,12 +1,43 @@
+\begin{table*}[t]
+\centering
+\small
+\resizebox{\columnwidth}{!}{\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+Variant \# & \multicolumn{2}{|c|}{Selected grasp} &  Succ \% & Fails as \% & Test set & \multicolumn{5}{|c|}{Prediction Performance} \\ \cline{2-3} \cline{7-11}
+ & Succs & Fails &  & of V1 fails & / GM & TP & FP & TN & FN & Accuracy \\ \hline
+V1 & 1070   & 469 & 69.53\% & 100\% & GM1 & - & - & - & - & - \\ \hline
+V2 &  781   & 207 & 79.05\% & 68.7\% & GM2 & - & - & - & - & - \\ \hline
+V3 & 1352 & 187 & 87.85\% & 39.9\% & GM1 & 37840 &	12226 & 39211 & 10244 & 77.42\% \\ \hline
+V4 &  1361 & 178 & 88.43\% & 38.0\% & GM1 & 40234 &	14475 & 36962 & 7850 & 77.57\% \\ \hline
+
+V5 & 1361 & 178 & 88.43\% & 38.0\%& GM1 & 39603 & 14122 &37315 & 8481	& 77.29\% \\ \hline
+
+V6 & 1375 & 164 & 89.34\% & 35.0\% & GM1 & 37584 &	11514 & 39923 &10500	& 77.88\% \\ \hline
+V7 & 1363 & 176 & 88.56\% & 37.5\% & GM1 & 39332 &	12020 & 39417 & 8752 & 79.13\% \\ \hline
+V8 & 1378 & 161 & 89.54\% & 34.3\% & GM1 & 37832 &	11361 & 40076	& 10252 & 78.28\% \\ \hline
+V9 & 887 & 101 & 89.78\% & 33.5\% & GM2 & 61866 &	11454& 38847& 11970 & 81.13\% \\ \hline
+V10 & 893 & 95 & 90.38\% & 31.6\% & GM2 & 64309 &	12517 & 37784 & 9527 & 82.24\% \\ \hline
+V11 & 894 & 94 & 90.49\% & 31.2\% & GM2 & 61611 & 9792 & 40509 & 12225 & 82.26\% \\ \hline
+V12 & 1319 & 220 & 85.71\% & 47.0\% & GM1 & - & - & - & - & - \\ \hline
+V13 & 1375 & 164 & 89.34\% & 35.0\% & GM1 & - & - & - & - & - \\ \hline
+V14 & 1366 & 173 & 88.76\% & 37.0\% & GM1 & - & - & - & - & - \\ \hline
+V15 & 1153 & 386 & 74.92\% & 82.0\% & GM1 & - & - & - & - & - \\ \hline
+V16 & 1377 & 162 & 89.47\% & 35.0\% & GM1 & - & - & - & - & - \\ \hline
+V17 & 1163 & 376 & 75.57\% & 80.0\% & GM1 & - & - & - & - & - \\ \hline
+\end{tabular}}
+\caption{Simulation results for all variants tested.}
+\label{table:Results-sim}
+\end{table*}
+
 This section presents a simulation analysis of the various architectures based on the two data sets. 
 We assess each variant in two different ways. First, for any method with an evaluative model we  measure the prediction accuracy of the EM. We compare the actual outcomes in a test set with the EM's prediction as to whether it is more likely to succeed or fail (output set at a threshold of 0.5). This gives us a confusion matrix from which we can calculate sensitivity, specificity and F1 score. Second, since a robot can only execute one grasp, we can measure the proportion of successful top-ranked grasps for any method. In each analysis the test set effectively replaces the GM as it contains, for any scene, a complete list of grasps. Thus TS1 contains grasps proposed by GM1 and TS2 contains grasps proposed by GM2. This allows us to simulate the effect of different generative models on performance.
 
-We performed both analyses and the results are given in Table~\ref{table:Results-sim}. A partial order dominance diagram, showing which differences in grasp success rate on the test set are statistically significant using Fisher's exact test, is given in Figure~\ref{fig:dominance}. When assessing pure GM architectures, we can only measure the top ranked grasp success, since the GMs give a grasp likelihood according to the generative model, not a probability of success.
+We performed both analyses and the results are given in Table~\ref{table:Results-sim}. A partial order dominance diagram, showing which differences in grasp success rate on the test set are statistically significant using Fisher's exact test, is given in Figure~\ref{fig:dominance}. When assessing pure GM architectures, we can only measure the top ranked grasp success, since the GMs give a grasp likelihood according to the generative model, not a probability of success. \textcolor{red}{Variant A dominates B if it has a higher success rate and the difference is statistically significant.}
 
 \begin{figure}
 \centering
 \includegraphics[width=0.5\columnwidth]{images/dominance}
-\caption{Partial order dominance diagram for simulation experiments. We used Fisher's exact test.}
+\caption{Partial order dominance diagram for simulation experiments. We used Fisher's exact test. \textcolor{red}{Variants with higher grasp success rates are shown higher up. Significant differences are transitive, so that V3 dominates V2 and thereby also dominates V15, V17 and V1.}}
 \label{fig:dominance}
 \end{figure}
 
