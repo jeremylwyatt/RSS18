@@ -56,7 +56,7 @@ The results above use GM1 as the generative model. We can measure the benefit of
 \end{figure*}
 
 
-For both the gradient and simulated-annealing based optimisations, while the predicted probability of success according to the EM rises, the actual success rate in simulation declines for all variants V12-V17. We observed that wrist position changes have a greater negative impact than finger joint. The results suggest that optimising dexterous grasps by the EM is non-trivial. It should be noted that the performance of the gradient ascent was much better than the simulated annealing.
+For both the gradient and simulated-annealing based optimisations, while the predicted probability of success according to the EM rises, the actual success rate in simulation declines for all variants V12-V17. The results suggest that optimising dexterous grasps by the EM is non-trivial. It should be noted that the performance of the gradient ascent was much better than the simulated annealing.
 
 It is instructive to understand the effect of re-ranking with the EM by referring to Figure~\ref{fig:successvsranking}. This shows the average grasp success probability (across the test set) in simulation against the grasp rank. We observed that the evaluative models are more effective than the generative models at ranking the grasps. The optimal ranking is also shown. It can be seen that the GEA architectures remove more than half the residual grasp failures by re-ranking so that a good grasp is the first ranked grasp.
 
