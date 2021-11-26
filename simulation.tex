@@ -73,7 +73,7 @@ The data set is divided into units called \textit{scenes}, where each scene comp
 \item All points in the point cloud $P_s$ are shifted by a three-dimensional vector sampled from a Gaussian distribution with parameters $\mu=0$ and $\sigma = 0.004$ (unit: meter), to simulate camera calibration errors.
 \item Given $P_s$, the chosen generative model (GM1 or GM2) proposes the candidate grasps. For GM1 and GM2, we choose up to 10 and 50 top grasps per each one of the 10 training grasps, respectively.
 \item The grasps are applied to the object in simulation. Before the execution of each grasp, we run a collision check with the virtual table (without the object). The grasps that fail this test are marked as \textit{collided}.
-\item 19 further simulated depth images are taken from other viewpoints around the object, as explained in step 2. Images with fewer than 250 depth points are discarded. We then sample with replacement from the remaining images and associate each sampled image and viewpoint with a grasp created in step 3.
+\item 19 further simulated depth images are taken from other viewpoints around the object, as explained in step 2. Images with fewer than 250 depth points are discarded. We then sample with replacement from the remaining images and associate each sampled image and viewpoint with a grasp created in step 4.
 \item The grasp outcome, trajectory and depth image are stored for each trial. The grasp parameters are converted to the camera frame for the associated view.
 \end{enumerate}
 
