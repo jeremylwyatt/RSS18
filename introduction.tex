@@ -4,7 +4,7 @@ For humanoid robots to be deployed in human populated environments, they must ha
 This raises the question of how to architect the learner. Grasp planning comprises two problems: generation and evaluation. Candidate grasps must first be generated according to some distribution conditioned on sensed data. Then each candidate grasp must be evaluated, so as to produce a grasp quality measure (e.g maximum resistible wrench), the probability of grasp success, the likely in-hand slip or rotation, etcetera. These measures are then used to rank grasps so as to select one to execute. Either or both of the {\em generative} or {\em evaluative} model can be learned. If only a generative model is learned then evaluation must be carried out using mechanically informed reasoning, which, as we noted, cannot easily be applied to the case of novel objects seen from a single view. If only an evaluative model is learned then grasp generation must proceed by search. This is challenging for true dexterous grasping as the hand may have more than twenty actuated degrees of freedom. Thus, for dexterous grasping of novel objects from a single view, it becomes appealing to learn {\em both} the generative and the evaluative model. 
 \begin{figure}[t]
 \begin{center}
-  \includegraphics[width=\columnwidth]{images/GEAarchitecture.pdf}
+  \includegraphics[width=\columnwidth]{images/GEAarchitecture.png}
   \end{center}
   \caption{Our grasping architecture. When shown an object, a generative model (GM) produces grasps, ranked according to its likelihood model. These are re-ranked by the predicted success probability of the evaluative Model (EM).The top ranked grasp is executed \label{fig:systemArchitecture}}
 \end{figure}
