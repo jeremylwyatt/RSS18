@@ -37,7 +37,7 @@ V2  & 40 & 81.6\% & V11 & 43  & 87.8\% \\
 \end{center}
 \end{figure*}
 
-We compared four variants on the real robot: V1, V2, V4 and V11. V1 and V2 are the pure generative models. V4 and V5 were, in simulation, the equal best generative-evaluative methods trained on DS1-TR. We broke ties and selected V4. V11 is, in simulation, the best performing generative-evaluative method using GM2 as the generative model. This selection allows us to compare the best generative-evaluative methods with their counterpart pure generative models. 
+We compared four variants on the real robot: V1, V2, V4 and V11. V1 and V2 are the pure generative models. V4 and V5 were, in simulation, the equal best generative-evaluative methods trained on DS1-Tr. We broke ties and selected V4. V11 is, in simulation, the best performing generative-evaluative method using GM2 as the generative model. This selection allows us to compare the best generative-evaluative methods with their counterpart pure generative models. 
 
 We employed the same real objects as described in \cite{kopicki2019ijrr}. This used 40 novel test objects (Figure~\ref{fig:real-objects}). Object-pose combinations were chosen to reduce the typical surface recovery. Some objects were employed in several poses, yielding 49 object-pose pairs. From the 40 objects, 35 belonged to object classes in the simulation data set, while the remaining five did not. Using this data set, all algorithms were evaluated on the real-robot using a paired trials methodology. Each was presented with the same object-pose combinations. Each variant generated a ranked list of grasps, and the highest ranked grasp was executed. The highest-ranked grasp based on the predicted success probability of an evaluative network is performed on each scene. A grasp was deemed successful if, when lifted for five seconds, the object then remained stable in the hand for a further five seconds.
 
@@ -61,7 +61,7 @@ The results are shown in Table~\ref{tab:robot-results}. In each case, the genera
 \begin{figure}[t]
 \begin{center}
 \includegraphics[width=0.5\columnwidth]{plots/A9A10_vertical.jpg}\\
-\caption{A small selection of successful grasps by V11 (left) and V4 (right) on objects with highly novel shapes in comparison with the training grasps. \label{fig:interest}}
+\caption{A small selection of successful grasps by V4 (left) and V11 (right) on objects with highly novel shapes in comparison with the training grasps. \label{fig:interest}}
 \end{center}
 \end{figure}
 

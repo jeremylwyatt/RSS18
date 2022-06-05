@@ -6,7 +6,7 @@ This raises the question of how to architect the learner. Grasp planning compris
 \begin{center}
   \includegraphics[width=\columnwidth]{images/GEAarchitecture.png}
   \end{center}
-  \caption{Our grasping architecture. When shown an object, a generative model (GM) produces grasps, ranked according to its likelihood model. These are re-ranked by the predicted success probability of the evaluative Model (EM).The top ranked grasp is executed \label{fig:systemArchitecture}}
+  \caption{Our grasping architecture. When shown an object, a generative model (GM) produces grasps, ranked according to its likelihood model. These are re-ranked by the predicted success probability of the evaluative Model (EM). The top ranked grasp is executed. \label{fig:systemArchitecture}}
 \end{figure}
 
 The contributions of this paper are as follows. First, we present a data set of 2.4m simulated dexterous grasps, available to evaluate dexterous grasping algorithms. Second, we release the source code of the dexterous grasp simulator, which can be used to visualise the data set and gather new data.\footnote{The code and simulated grasp data set are available at \href{https://rusen.github.io/DDG}{https://rusen.github.io/DDG}.} Third, we combine an existing learned generative model with multiple learned evaluative models that are trained from simulated grasps proposed by the generative model. Fourth, we present an extensive evaluation of all these models on our simulated data set. Fifth, we compare the two most promising variants on a real robot with a data set of objects in challenging poses. Finally, we perform a deep dive into the simulation results.
